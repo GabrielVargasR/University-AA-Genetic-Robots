@@ -27,10 +27,16 @@ public class Darwin implements IConstants{
 		return this.generations.get(pGen);
 	}
 	
-	private void evaluateFitness(Robot pRobot) {
-		int distance = pRobot.getDistance();
-		int time = pRobot.getTime();
+	private double evaluateFitness(Robot pRobot) {
+		double distance = pRobot.getDistance();
+		double time = pRobot.getTime();
 		double cost = pRobot.getCost();
+		
+		double cDist = (4.0 * (MIN_DISTANCE - distance))/20.0;
+		double cTime = (MIN_DISTANCE - distance) / time;
+		double cCost = 1.0/cost;
+		
+		return (cDist + cTime + cCost) / 6.0;
 	}
 	
 	private void naturalSelection() {}
