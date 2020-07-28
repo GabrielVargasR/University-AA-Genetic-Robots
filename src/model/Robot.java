@@ -1,0 +1,157 @@
+package model;
+
+import java.util.Random;
+
+public class Robot {
+	
+	private String id;
+	private int motorType;
+	private int cameraType;
+	private int batteryType;
+	
+	private byte motor;
+	private byte camera;
+	private byte battery;
+	private int genes;
+	
+	private double cost;
+	private int distance;
+	private int time;
+	
+	private Robot parentA;
+	private Robot parentB;
+
+	public Robot(int pGen, int pNum) {
+		// for first generation
+		Random rand = new Random();
+		this.id = "g" + pGen + "-n" + pNum;
+		
+		
+		this.motor = (byte) rand.nextInt(256);
+		this.camera = (byte) rand.nextInt(256);
+		this.battery = (byte) rand.nextInt(256);
+		
+		this.motorType = this.calculateType(this.motor);
+		this.cameraType = this.calculateType(this.camera);
+		this.batteryType = this.calculateType(this.battery);
+		
+		this.calculateCost();
+		
+		this.constructGenes();
+		
+		this.parentA = null;
+		this.parentB = null;
+	}
+	
+	public Robot(int pGenes, Robot pParA, Robot pParB) {
+		// for new generations
+		this.parentA = pParA;
+		this.parentB = pParB;
+		this.genes = pGenes;
+		
+		// TODO extract info from genes
+	}
+	
+	private void constructGenes() {
+		this.genes = 0b1;
+	}
+	
+	private int calculateType(byte pSpec) {
+		if (Byte.toUnsignedInt(pSpec) < 85) {
+			return 1;
+		} else if (Byte.toUnsignedInt(pSpec) < 171) {
+			return 2;
+		} else if (Byte.toUnsignedInt(pSpec) < 256) {
+			return 3;
+		}
+		return -1;
+	}
+	
+	private void calculateCost() {
+		this.cost = (double) (this.motorType + this.cameraType + this.batteryType) / 3;
+	}
+	
+	// ---------------------------- Getters & Setters ----------------------------
+	public String getId() {
+		return this.id;
+	}
+
+	public int getMotorType() {
+		return this.motorType;
+	}
+
+	public int getCameraType() {
+		return this.cameraType;
+	}
+
+	public int getBatteryType() {
+		return this.batteryType;
+	}
+
+	public byte getMotor() {
+		return this.motor;
+	}
+
+	public byte getCamera() {
+		return this.camera;
+	}
+
+	public byte getBattery() {
+		return this.battery;
+	}
+
+	public int getGenes() {
+		return this.genes;
+	}
+
+	public double getCost() {
+		return this.cost;
+	}
+
+	public int getDistance() {
+		return this.distance;
+	}
+
+	public void setDistance(int distance) {
+		this.distance = distance;
+	}
+
+	public int getTime() {
+		return this.time;
+	}
+
+	public void setTime(int time) {
+		this.time = time;
+	}
+	
+	
+	public Robot getParentA() {
+		return parentA;
+	}
+
+	public Robot getParentB() {
+		return parentB;
+	}
+
+	public static void main(String[] args) {
+		
+		Robot r = new Robot(1,1);
+		
+		byte bateria = r.getBattery();
+		byte camara = r.getCamera();
+		byte motor = r.getMotor();
+		
+		int bat = r.getBatteryType();
+		int cam = r.getCameraType();
+		int mot = r.getMotorType();
+		
+		double costo = r.getCost();
+		
+		System.out.println("ID: " + r.getId());
+		System.out.println("Batería: " + String.format("%8s", Integer.toBinaryString(bateria & 0xFF)).replace(' ', '0') + "(" + Byte.toUnsignedInt(bateria) + ")" + " - tipo: " + bat);
+		System.out.println("Camara: " + String.format("%8s", Integer.toBinaryString(camara & 0xFF)).replace(' ', '0') + "(" + Byte.toUnsignedInt(camara) + ")"+ " - tipo: " + cam);
+		System.out.println("Motor: " + String.format("%8s", Integer.toBinaryString(motor & 0xFF)).replace(' ', '0') + "(" + Byte.toUnsignedInt(motor) + ")"+ " - tipo: " + mot);
+		System.out.println("Costo: " + costo);
+		
+	}
+}
