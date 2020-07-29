@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -35,11 +36,14 @@ public class TablePanel extends JPanel implements IConstants{
 		this.genCounter = 1;
 		this.tableSelection();
 		
-		this.createButtons();
+		
 		String[][] arr = controller.getGeneration(this.genCounter);
 		this.table = new JTable(arr, HEADER);
+		this.table.setBounds(0, 0, 700, 600);
+		this.table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.table.getSelectionModel().addListSelectionListener(this.tableListener);
         this.showTable();
+        this.createButtons();
 	}
 	
 	private void createButtons() {
@@ -66,10 +70,10 @@ public class TablePanel extends JPanel implements IConstants{
 	}
 	
 	private void refreshTable() {
-		System.out.println(genCounter);
 		this.scrollPane.setVisible(false);
 		String[][] arr = controller.getGeneration(this.genCounter);
 		this.table = new JTable(arr, HEADER);
+		this.table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.table.getSelectionModel().addListSelectionListener(this.tableListener);
 		this.showTable();
 	}
