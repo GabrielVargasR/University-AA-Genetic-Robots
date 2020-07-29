@@ -1,7 +1,6 @@
 package gui;
 
 import javax.swing.JPanel;
-import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -17,10 +16,6 @@ public class TablePanel extends JPanel implements IConstants{
 	
 	private JTable table;
 	private JScrollPane scrollPane;
-	private JButton first;
-	private JButton back;
-	private JButton next;
-	private JButton last;
 	private ListSelectionListener tableListener;
 	private int genCounter;
 	
@@ -29,8 +24,8 @@ public class TablePanel extends JPanel implements IConstants{
 
 	public TablePanel() {
 		super();
-		super.setBounds(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-		super.setOpaque(true);
+//		super.setBounds(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+//		super.setOpaque(true);
 		
 		this.controller = new TableController();
 		this.genCounter = 1;
@@ -39,27 +34,9 @@ public class TablePanel extends JPanel implements IConstants{
 		
 		String[][] arr = controller.getGeneration(this.genCounter);
 		this.table = new JTable(arr, HEADER);
-		this.table.setBounds(0, 0, 700, 600);
 		this.table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.table.getSelectionModel().addListSelectionListener(this.tableListener);
         this.showTable();
-        this.createButtons();
-	}
-	
-	private void createButtons() {
-		this.first = new JButton("First");
-		this.back = new JButton("Back");
-		this.next = new JButton("Next");
-		this.last = new JButton("Last");
-		this.first.addActionListener(this.firstListener());
-		this.back.addActionListener(this.backListener());
-		this.next.addActionListener(this.nextListener());
-		this.last.addActionListener(this.lastListener());
-		
-		this.add(this.first);
-		this.add(this.back);
-		this.add(this.next);
-		this.add(this.last);
 	}
 	
 	private void showTable() {
@@ -78,46 +55,6 @@ public class TablePanel extends JPanel implements IConstants{
 		this.showTable();
 	}
 	
-	private ActionListener firstListener() {
-		ActionListener action = new ActionListener() {
-			public void actionPerformed(ActionEvent e){
-				genCounter = 1;
-				refreshTable();
-			}
-		};
-		return action;
-	}
-	
-	private ActionListener backListener() {
-		ActionListener action = new ActionListener() {
-			public void actionPerformed(ActionEvent e){
-				genCounter = (genCounter > 1) ? --genCounter : 1;
-				refreshTable();
-			}
-		};
-		return action;
-	}
-	
-	private ActionListener nextListener() {
-		ActionListener action = new ActionListener() {
-			public void actionPerformed(ActionEvent e){
-				genCounter = (genCounter < controller.getSize()) ? ++genCounter : controller.getSize();
-				refreshTable();
-			}
-		};
-		return action;
-	}
-	
-	private ActionListener lastListener() {
-		ActionListener action = new ActionListener() {
-			public void actionPerformed(ActionEvent e){
-				genCounter = controller.getSize();
-				refreshTable();
-			}
-		};
-		return action;
-	}
-	
 	private void tableSelection() {
 		tableListener = new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent event) {
@@ -131,6 +68,45 @@ public class TablePanel extends JPanel implements IConstants{
 		};
 	}
 	
+	public ActionListener firstListener() {
+		ActionListener action = new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				genCounter = 1;
+				refreshTable();
+			}
+		};
+		return action;
+	}
+	
+	public ActionListener backListener() {
+		ActionListener action = new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				genCounter = (genCounter > 1) ? --genCounter : 1;
+				refreshTable();
+			}
+		};
+		return action;
+	}
+	
+	public ActionListener nextListener() {
+		ActionListener action = new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				genCounter = (genCounter < controller.getSize()) ? ++genCounter : controller.getSize();
+				refreshTable();
+			}
+		};
+		return action;
+	}
+	
+	public ActionListener lastListener() {
+		ActionListener action = new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				genCounter = controller.getSize();
+				refreshTable();
+			}
+		};
+		return action;
+	}
 	
 	
 }
