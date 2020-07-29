@@ -23,23 +23,46 @@ public class Darwin implements IConstants{
 		this.generations.put(genCounter, gen);
 	}
 	
+	public Robot getIndividual(int pGen, int pNum) {
+		return this.generations.get(pGen).get(pNum);
+	}
+	
 	public ArrayList<Robot> getGeneration(int pGen){
 		return this.generations.get(pGen);
 	}
 	
-	private void evaluateFitness(Robot pRobot) {
-		int distance = pRobot.getDistance();
-		int time = pRobot.getTime();
-		double cost = pRobot.getCost();
+	public int getGenAmount() {
+		return this.genCounter;
 	}
 	
-	private void naturalSelection() {}
+	private double evaluateFitness(Robot pRobot) {
+		double distance = pRobot.getDistance();
+		double time = pRobot.getTime();
+		double cost = pRobot.getCost();
+		
+		double cDist = (4.0 * (MIN_DISTANCE - distance))/20.0;
+		double cTime = (MIN_DISTANCE - distance) / time;
+		double cCost = 1.0/cost;
+		
+		return (cDist + cTime + cCost) / 6.0;
+	}
 	
-	private void mate() {}
+	private void naturalSelection() {
+		// loop
+		this.evaluateFitness(null);
+	}
+	
+	private void mate() {
+	}
 	
 	private void mutate() {}
 	
-	public void run() {}
+	public void run() {
+		// loop
+		this.naturalSelection();
+		this.mate();
+		this.mutate();
+	}
 	
 	public static void main(String[] args) {
 		Darwin d = new Darwin();
@@ -49,5 +72,6 @@ public class Darwin implements IConstants{
 			System.out.println(r.getId() + ": " +  String.format("%8s", Integer.toBinaryString(r.getBattery() & 0xFF)).replace(' ', '0')
 			+ String.format("%8s", Integer.toBinaryString(r.getCamera() & 0xFF)).replace(' ', '0')+  String.format("%8s", Integer.toBinaryString(r.getMotor() & 0xFF)).replace(' ', '0'));
 		}
+	
 	}
 }
