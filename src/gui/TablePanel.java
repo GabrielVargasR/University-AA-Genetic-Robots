@@ -4,6 +4,11 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import control.TableController;
+
 import java.awt.event.*;
 import model.IConstants;
 
@@ -16,12 +21,16 @@ public class TablePanel extends JPanel implements IConstants{
 	private JButton next;
 	private JButton last;
 	private int genCounter;
-	private int size; // temp
+	
+	private TableController controller;
+	
 
 	public TablePanel() {
 		super();
 		super.setBounds(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 		super.setOpaque(true);
+		
+		this.controller = new TableController();
 		
 		this.createButtons();
 		String[][] arr = {};
@@ -52,6 +61,13 @@ public class TablePanel extends JPanel implements IConstants{
 		this.repaint();
 	}
 	
+	private void refreshTable() {
+		this.scrollPane.setVisible(false);
+		String[][] arr = {}; // aquí hay que conseguir la lista de robots de la generación
+		this.table = new JTable(arr, HEADER);
+		this.showTable();
+	}
+	
 	private ActionListener firstListener() {
 		ActionListener action = new ActionListener() {
 			public void actionPerformed(ActionEvent e){  
@@ -75,7 +91,7 @@ public class TablePanel extends JPanel implements IConstants{
 	private ActionListener nextListener() {
 		ActionListener action = new ActionListener() {
 			public void actionPerformed(ActionEvent e){  
-				genCounter = (genCounter < size) ? ++genCounter : 0;
+				genCounter = (genCounter < controller.getSize()) ? ++genCounter : 0;
 				refreshTable();
 			}
 		};
@@ -85,17 +101,24 @@ public class TablePanel extends JPanel implements IConstants{
 	private ActionListener lastListener() {
 		ActionListener action = new ActionListener() {
 			public void actionPerformed(ActionEvent e){  
-				genCounter = size;
+				genCounter = controller.getSize();
 				refreshTable();
 			}
 		};
 		return action;
 	}
 	
-	private void refreshTable() {
-		scrollPane.setVisible(false);
-		String[][] arr = {}; // aquí hay que conseguir la lista de robots de la generación
-		table = new JTable(arr, HEADER);
-		this.showTable();
+	private ListSelectionListener tableSelection() {
+		ListSelectionListener listener = new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent event) {
+	            // do some actions here, for example
+	            // print first column value from selected row
+	            System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
+	        }
+		};
+		return listener;
 	}
+	
+	
+	
 }

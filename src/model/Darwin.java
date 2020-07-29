@@ -23,8 +23,16 @@ public class Darwin implements IConstants{
 		this.generations.put(genCounter, gen);
 	}
 	
+	public Robot getIndividual(int pGen, int pNum) {
+		return this.generations.get(pGen).get(pNum);
+	}
+	
 	public ArrayList<Robot> getGeneration(int pGen){
 		return this.generations.get(pGen);
+	}
+	
+	public int getGenAmount() {
+		return this.genCounter;
 	}
 	
 	private double evaluateFitness(Robot pRobot) {
@@ -39,13 +47,22 @@ public class Darwin implements IConstants{
 		return (cDist + cTime + cCost) / 6.0;
 	}
 	
-	private void naturalSelection() {}
+	private void naturalSelection() {
+		// loop
+		this.evaluateFitness(null);
+	}
 	
-	private void mate() {}
+	private void mate() {
+	}
 	
 	private void mutate() {}
 	
-	public void run() {}
+	public void run() {
+		// loop
+		this.naturalSelection();
+		this.mate();
+		this.mutate();
+	}
 	
 	public static void main(String[] args) {
 		Darwin d = new Darwin();
@@ -55,5 +72,6 @@ public class Darwin implements IConstants{
 			System.out.println(r.getId() + ": " +  String.format("%8s", Integer.toBinaryString(r.getBattery() & 0xFF)).replace(' ', '0')
 			+ String.format("%8s", Integer.toBinaryString(r.getCamera() & 0xFF)).replace(' ', '0')+  String.format("%8s", Integer.toBinaryString(r.getMotor() & 0xFF)).replace(' ', '0'));
 		}
+	
 	}
 }
