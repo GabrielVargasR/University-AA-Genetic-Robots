@@ -74,15 +74,10 @@ public class TablePanel extends JPanel implements IConstants{
 		this.showTable();
 	}
 	
-	private void updateCounter(int pNew) {
-		this.genCounter = pNew;
-	}
-	
 	private ActionListener firstListener() {
 		ActionListener action = new ActionListener() {
-			public void actionPerformed(ActionEvent e){  
-				int i = 1;
-				updateCounter(i);
+			public void actionPerformed(ActionEvent e){
+				genCounter = 1;
 				refreshTable();
 			}
 		};
@@ -91,9 +86,8 @@ public class TablePanel extends JPanel implements IConstants{
 	
 	private ActionListener backListener() {
 		ActionListener action = new ActionListener() {
-			public void actionPerformed(ActionEvent e){  
-				int i = (genCounter > 1) ? --genCounter : 1;
-				updateCounter(i);
+			public void actionPerformed(ActionEvent e){
+				genCounter = (genCounter > 1) ? --genCounter : 1;
 				refreshTable();
 			}
 		};
@@ -102,9 +96,8 @@ public class TablePanel extends JPanel implements IConstants{
 	
 	private ActionListener nextListener() {
 		ActionListener action = new ActionListener() {
-			public void actionPerformed(ActionEvent e){  
-				int i = (genCounter < controller.getSize()) ? ++genCounter : controller.getSize();
-				updateCounter(i);
+			public void actionPerformed(ActionEvent e){
+				genCounter = (genCounter < controller.getSize()) ? ++genCounter : controller.getSize();
 				refreshTable();
 			}
 		};
@@ -113,9 +106,8 @@ public class TablePanel extends JPanel implements IConstants{
 	
 	private ActionListener lastListener() {
 		ActionListener action = new ActionListener() {
-			public void actionPerformed(ActionEvent e){  
-				int i = controller.getSize();
-				updateCounter(i);
+			public void actionPerformed(ActionEvent e){
+				genCounter = controller.getSize();
 				refreshTable();
 			}
 		};
