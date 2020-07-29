@@ -20,6 +20,7 @@ public class TablePanel extends JPanel implements IConstants{
 	private JButton back;
 	private JButton next;
 	private JButton last;
+	private ListSelectionListener tableListener;
 	private int genCounter;
 	
 	private TableController controller;
@@ -31,10 +32,13 @@ public class TablePanel extends JPanel implements IConstants{
 		super.setOpaque(true);
 		
 		this.controller = new TableController();
+		this.genCounter = 1;
+		this.tableSelection();
 		
 		this.createButtons();
-		String[][] arr = {};
+		String[][] arr = controller.getGeneration(this.genCounter);
 		this.table = new JTable(arr, HEADER);
+		this.table.getSelectionModel().addListSelectionListener(this.tableListener);
         this.showTable();
 	}
 	
@@ -62,16 +66,23 @@ public class TablePanel extends JPanel implements IConstants{
 	}
 	
 	private void refreshTable() {
+		System.out.println(genCounter);
 		this.scrollPane.setVisible(false);
-		String[][] arr = {}; // aquí hay que conseguir la lista de robots de la generación
+		String[][] arr = controller.getGeneration(this.genCounter);
 		this.table = new JTable(arr, HEADER);
+		this.table.getSelectionModel().addListSelectionListener(this.tableListener);
 		this.showTable();
+	}
+	
+	private void updateCounter(int pNew) {
+		this.genCounter = pNew;
 	}
 	
 	private ActionListener firstListener() {
 		ActionListener action = new ActionListener() {
 			public void actionPerformed(ActionEvent e){  
-				genCounter = 1;
+				int i = 1;
+				updateCounter(i);
 				refreshTable();
 			}
 		};
@@ -81,7 +92,8 @@ public class TablePanel extends JPanel implements IConstants{
 	private ActionListener backListener() {
 		ActionListener action = new ActionListener() {
 			public void actionPerformed(ActionEvent e){  
-				genCounter = (genCounter > 0) ? --genCounter : 0;
+				int i = (genCounter > 1) ? --genCounter : 1;
+				updateCounter(i);
 				refreshTable();
 			}
 		};
@@ -91,7 +103,8 @@ public class TablePanel extends JPanel implements IConstants{
 	private ActionListener nextListener() {
 		ActionListener action = new ActionListener() {
 			public void actionPerformed(ActionEvent e){  
-				genCounter = (genCounter < controller.getSize()) ? ++genCounter : 0;
+				int i = (genCounter < controller.getSize()) ? ++genCounter : controller.getSize();
+				updateCounter(i);
 				refreshTable();
 			}
 		};
@@ -101,22 +114,25 @@ public class TablePanel extends JPanel implements IConstants{
 	private ActionListener lastListener() {
 		ActionListener action = new ActionListener() {
 			public void actionPerformed(ActionEvent e){  
-				genCounter = controller.getSize();
+				int i = controller.getSize();
+				updateCounter(i);
 				refreshTable();
 			}
 		};
 		return action;
 	}
 	
-	private ListSelectionListener tableSelection() {
-		ListSelectionListener listener = new ListSelectionListener() {
+	private void tableSelection() {
+		tableListener = new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent event) {
 	            // do some actions here, for example
 	            // print first column value from selected row
-	            System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
+				if (!event.getValueIsAdjusting()) {
+					String info = controller.getRobotInfo(table.getValueAt(table.getSelectedRow(), 0).toString());
+					System.out.println(info);
+				}
 	        }
 		};
-		return listener;
 	}
 	
 	
