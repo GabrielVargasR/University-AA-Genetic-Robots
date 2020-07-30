@@ -17,7 +17,7 @@ public class GUIController implements IConstants{
 		ArrayList<Robot> gen = this.darwin.getGeneration(pNum);
 		
 		if (gen == null) {
-			return new String[][] {{}};
+			return new String[][] {};
 		}
 		
 		String [][] robots = new String[POPULATION_SIZE][];
