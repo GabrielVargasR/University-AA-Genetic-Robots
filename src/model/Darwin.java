@@ -10,6 +10,16 @@ public class Darwin implements IConstants{
 	public Darwin() {
 		this.generations = new HashMap<Integer, ArrayList<Robot>>();
 		this.populateFirstGen();
+		
+		// FOR GUI TEST ONLY
+		this.genCounter++;
+		ArrayList<Robot> gen = new ArrayList<Robot>();
+		
+		for (int i = 0; i < POPULATION_SIZE; i++) {
+			gen.add(new Robot(genCounter, i));
+		}
+		
+		this.generations.put(genCounter, gen);
 	}
 	
 	private void populateFirstGen() {
