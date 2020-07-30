@@ -1,13 +1,15 @@
 package control;
 
 import java.util.ArrayList;
+import view.Display;
 
 import model.*;
 
-public class TableController implements IConstants{
+public class GUIController implements IConstants{
 	private Darwin darwin;
+	private Display display;
 
-	public TableController() {
+	public GUIController() {
 		this.darwin = new Darwin();
 	}
 	
@@ -43,6 +45,15 @@ public class TableController implements IConstants{
 				+ String.format("%8s", Integer.toBinaryString(rob.getCamera() & 0xFF)).replace(' ', '0')+  String.format("%8s", Integer.toBinaryString(rob.getMotor() & 0xFF)).replace(' ', '0');
 	}
 	
+	public void displayRobotInfo(String pId) {
+		String[] idInfo = pId.replace("g", "").replace("n", "").split("-");
+		Robot rob = darwin.getIndividual(Integer.parseInt(idInfo[0]), Integer.parseInt(idInfo[1]));
+		String info = rob.getId() + ": " +  String.format("%8s", Integer.toBinaryString(rob.getBattery() & 0xFF)).replace(' ', '0')
+				+ String.format("%8s", Integer.toBinaryString(rob.getCamera() & 0xFF)).replace(' ', '0')+  String.format("%8s", Integer.toBinaryString(rob.getMotor() & 0xFF)).replace(' ', '0');
+		
+		
+	}
+	
 	public int getSize() {
 		return darwin.getGenAmount();
 	}
@@ -54,5 +65,4 @@ public class TableController implements IConstants{
 		System.out.println(nums[0]);
 		System.out.println(nums[1]);
 	}
-
 }

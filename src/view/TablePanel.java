@@ -1,4 +1,4 @@
-package gui;
+package view;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -7,7 +7,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import control.TableController;
+import control.GUIController;
 
 import java.awt.event.*;
 import model.IConstants;
@@ -19,15 +19,13 @@ public class TablePanel extends JPanel implements IConstants{
 	private ListSelectionListener tableListener;
 	private int genCounter;
 	
-	private TableController controller;
+	private GUIController controller;
 	
 
-	public TablePanel() {
+	public TablePanel(GUIController pController) {
 		super();
-//		super.setBounds(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-//		super.setOpaque(true);
 		
-		this.controller = new TableController();
+		this.controller = pController;
 		this.genCounter = 1;
 		this.tableSelection();
 		
