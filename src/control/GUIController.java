@@ -37,25 +37,21 @@ public class GUIController implements IConstants{
 		return robots;
 	}
 	
-	public String getRobotInfo(String pId) {
-		String[] idInfo = pId.replace("g", "").replace("n", "").split("-");
-		Robot rob = darwin.getIndividual(Integer.parseInt(idInfo[0]), Integer.parseInt(idInfo[1]));
-		// TODO definir qué info se va a imprimir específicamente del robot
-		return rob.getId() + ": " +  String.format("%8s", Integer.toBinaryString(rob.getBattery() & 0xFF)).replace(' ', '0')
-				+ String.format("%8s", Integer.toBinaryString(rob.getCamera() & 0xFF)).replace(' ', '0')+  String.format("%8s", Integer.toBinaryString(rob.getMotor() & 0xFF)).replace(' ', '0');
-	}
-	
 	public void displayRobotInfo(String pId) {
 		String[] idInfo = pId.replace("g", "").replace("n", "").split("-");
 		Robot rob = darwin.getIndividual(Integer.parseInt(idInfo[0]), Integer.parseInt(idInfo[1]));
 		String info = rob.getId() + ": " +  String.format("%8s", Integer.toBinaryString(rob.getBattery() & 0xFF)).replace(' ', '0')
 				+ String.format("%8s", Integer.toBinaryString(rob.getCamera() & 0xFF)).replace(' ', '0')+  String.format("%8s", Integer.toBinaryString(rob.getMotor() & 0xFF)).replace(' ', '0');
 		
-		
+		this.display.displayRobotInfo(info);
 	}
 	
 	public int getSize() {
 		return darwin.getGenAmount();
+	}
+	
+	public void setDisplay(Display pDisplay) {
+		this.display = pDisplay;
 	}
 	
 	public static void main(String[] args) {
