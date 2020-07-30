@@ -59,8 +59,7 @@ public class TablePanel extends JPanel implements IConstants{
 	            // do some actions here, for example
 	            // print first column value from selected row
 				if (!event.getValueIsAdjusting()) {
-					String info = controller.getRobotInfo(table.getValueAt(table.getSelectedRow(), 0).toString());
-					System.out.println(info);
+					controller.displayRobotInfo(table.getValueAt(table.getSelectedRow(), 0).toString());
 				}
 	        }
 		};

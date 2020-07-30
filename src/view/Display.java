@@ -3,6 +3,7 @@ package view;
 import control.GUIController;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
@@ -31,6 +32,7 @@ public class Display extends JFrame implements IConstants{
 		
 		this.constraints = new GridBagConstraints();
 		this.controller = new GUIController();
+		this.controller.setDisplay(this);
 		
 		this.tablePanel = new TablePanel(this.controller);
 		this.constraints.fill = GridBagConstraints.BOTH;
@@ -38,12 +40,15 @@ public class Display extends JFrame implements IConstants{
 		this.constraints.gridy = 0;
 		this.constraints.weightx = 1;
 		this.constraints.weighty = 1;
+//		this.constraints.gridwidth = 1;
+//		this.constraints.gridheight = 1;
 		this.add(this.tablePanel, this.constraints);
 		
 		this.initializeButtons();
 		this.createInfoArea();
+		super.setLocation(400, 100);
 		super.setVisible(true);
-//		super.pack();
+		super.pack();
 	}
 	
 	private void initializeButtons() {
@@ -71,19 +76,20 @@ public class Display extends JFrame implements IConstants{
 	}
 	
 	private void createInfoArea() {
-		this.robotInfo = new JTextArea("agsfdg",5, 5);
+		this.robotInfo = new JTextArea(10, 10);
 //		this.robotInfo.setEditable(false);
-		this.robotInfo.setText("abc");
-		this.robotInfo.setMaximumSize(this.robotInfo.getPreferredSize());
 		
 		JScrollPane robotInfoPane = new JScrollPane(this.robotInfo);
 		robotInfoPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		robotInfoPane.setPreferredSize(new Dimension(450, 400));
 		
 		this.constraints.fill = GridBagConstraints.BOTH;
 		this.constraints.gridx = 1;
 		this.constraints.gridy = 0;
 		this.constraints.weightx = 1;
 		this.constraints.weighty = 1;
+//		this.constraints.gridwidth = 1;
+//		this.constraints.gridheight = 1;
 		
 		this.add(robotInfoPane, this.constraints);
 	}
