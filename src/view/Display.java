@@ -31,6 +31,7 @@ public class Display extends JFrame implements IConstants{
 		
 		this.constraints = new GridBagConstraints();
 		this.controller = new GUIController();
+		this.controller.setDisplay(this);
 		
 		this.tablePanel = new TablePanel(this.controller);
 		this.constraints.fill = GridBagConstraints.BOTH;
@@ -38,12 +39,15 @@ public class Display extends JFrame implements IConstants{
 		this.constraints.gridy = 0;
 		this.constraints.weightx = 1;
 		this.constraints.weighty = 1;
+//		this.constraints.gridwidth = 1;
+//		this.constraints.gridheight = 1;
 		this.add(this.tablePanel, this.constraints);
 		
 		this.initializeButtons();
 		this.createInfoArea();
+		super.setLocation(400, 100);
 		super.setVisible(true);
-//		super.pack();
+		super.pack();
 	}
 	
 	private void initializeButtons() {
@@ -84,6 +88,8 @@ public class Display extends JFrame implements IConstants{
 		this.constraints.gridy = 0;
 		this.constraints.weightx = 1;
 		this.constraints.weighty = 1;
+//		this.constraints.gridwidth = 1;
+//		this.constraints.gridheight = 1;
 		
 		this.add(robotInfoPane, this.constraints);
 	}
