@@ -3,10 +3,11 @@ public class MarkovChain {
 
     private int currentState;
     private int[][] graph;
-    private final int STATES = 4; 
+    private final int STATES; 
 
-    public MarkovChain(){
+    public MarkovChain(int statesNumber){
         currentState = 0;
+        STATES = statesNumber;
         graph = new int[STATES][STATES];
     }
 
