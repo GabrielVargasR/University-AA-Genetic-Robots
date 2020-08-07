@@ -1,4 +1,7 @@
 package model;
+
+import java.util.Random;
+
 public class MarkovChain {
 
     private int currentState;
@@ -16,7 +19,7 @@ public class MarkovChain {
     }
 
     //Recibe un array de tamano STATES X STATES con los pesos de cada arco
-    public void assignGraphWeight(int[] pWeights){
+    public void assignGraphWeight(byte[] pWeights){
         int weightsIndex = 0;
         for ( int row = 0; row < STATES; row++) {
             for (int col = 0; col < STATES; col++) {
@@ -55,8 +58,13 @@ public class MarkovChain {
         return edgesProb;
     }
     private int pickAdjacentPosition(double[] pEdgesProbability){
+        Random random = new Random();
+        double randomBoundary = random.nextInt(100)+1;
+        double probSum = 0;
         int chosenEdge = 0;
-        //Pick a random node base on probability
-        return chosenEdge;
+        while(probSum < randomBoundary){
+            probSum = probSum + (pEdgesProbability[chosenEdge++])*100;
+        } 
+        return chosenEdge-1;
     }
 }
