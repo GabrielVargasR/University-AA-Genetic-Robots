@@ -2,6 +2,7 @@ package model;
 
 public interface IConstants {
 	public static final int POPULATION_SIZE = 20;
+	public static final int GENE_SIZE = 8;
 	
 	public static int MAP_SIZE = 20;
 	public static int[] MAP_START = {19,0};
