@@ -2,7 +2,7 @@ package model;
 
 import java.util.Random;
 
-public class Robot {
+public class Robot implements IConstants{
 	
 	private String id;
 	private int motorType;
@@ -12,7 +12,7 @@ public class Robot {
 	private byte motor;
 	private byte camera;
 	private byte battery;
-	private int genes;
+	private byte[] genes;
 	
 	private double cost;
 	private int distance;
@@ -43,7 +43,7 @@ public class Robot {
 		this.parentB = null;
 	}
 	
-	public Robot(int pGenes, Robot pParA, Robot pParB) {
+	public Robot(byte[] pGenes, Robot pParA, Robot pParB) {
 		// for new generations
 		this.parentA = pParA;
 		this.parentB = pParB;
@@ -53,7 +53,10 @@ public class Robot {
 	}
 	
 	private void constructGenes() {
-		this.genes = 0b1;
+		this.genes = new byte[GENE_SIZE];
+		this.genes[0] = this.motor;
+		this.genes[1] = this.camera;
+		this.genes[2] = this.battery;
 	}
 	
 	private int calculateType(byte pSpec) {
@@ -100,7 +103,7 @@ public class Robot {
 		return this.battery;
 	}
 
-	public int getGenes() {
+	public byte[] getGenes() {
 		return this.genes;
 	}
 

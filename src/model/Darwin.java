@@ -62,26 +62,117 @@ public class Darwin implements IConstants{
 		this.evaluateFitness(null);
 	}
 	
-	private void mate() {
+	private byte[] swapGenes(byte chrom1, byte chrom2, int pBottom, int pTop) {
+		byte new1 = 0b0;
+		byte new2 = 0b0;
+		
+		for (int i = pTop; i > pBottom; i--) {
+			new1 <<= 1;
+			new2 <<= 1;
+			
+			new1 += chrom2 >> i & 1;
+			new2 += chrom1 >> i & 1;
+		}
+		
+		for (int i = pBottom; i >= 0; i--) {
+			new1 <<= 1;
+			new2 <<= 1;
+			
+			new1 += chrom1 >> i & 1;
+			new2 += chrom2 >> i & 1;
+		}
+		
+		return new byte[] {new1, new2};
 	}
+	
+	private void cross(Robot pRobot1, Robot pRobot2) {
+		byte[] parent1 = pRobot1.getGenes();
+		byte[] parent2 = pRobot2.getGenes();
+		byte[] gene1 = new byte[GENE_SIZE];
+		byte[] gene2 = new byte[GENE_SIZE];
+		
+		byte[] temp;
+		
+		for(int i = 0; i < 3; i++) {
+			temp = this.swapGenes(parent1[i], parent2[i], 3, 7);
+			gene1[i] = temp[0];
+			gene2[i] = temp[1];
+		}
+		
+		// aquí se mandan a cruzar los genes que tienen que ver con la cadena de Markov
+		
+		Robot new1 = new Robot(gene1, pRobot1, pRobot2);
+		Robot new2 = new Robot(gene2, pRobot1, pRobot2);
+		
+		ArrayList<Robot> gen = this.generations.get(this.genCounter);
+		gen.add(new1);
+		gen.add(new2);
+	}
+	
 	
 	private void mutate() {}
 	
 	public void run() {
 		// loop
+		this.genCounter++;
+		this.generations.put(this.genCounter, new ArrayList<Robot>());
 		this.naturalSelection();
-		this.mate();
+		this.cross(null, null);
 		this.mutate();
 	}
 	
 	public static void main(String[] args) {
 		Darwin d = new Darwin();
-		ArrayList<Robot> gen =  d.getGeneration(1);
+//		ArrayList<Robot> gen =  d.getGeneration(1);
+//		
+//		for (Robot r : gen) {
+//			System.out.println(r.getId() + ": " +  String.format("%8s", Integer.toBinaryString(r.getBattery() & 0xFF)).replace(' ', '0')
+//			+ String.format("%8s", Integer.toBinaryString(r.getCamera() & 0xFF)).replace(' ', '0')+  String.format("%8s", Integer.toBinaryString(r.getMotor() & 0xFF)).replace(' ', '0'));
+//		}
 		
-		for (Robot r : gen) {
-			System.out.println(r.getId() + ": " +  String.format("%8s", Integer.toBinaryString(r.getBattery() & 0xFF)).replace(' ', '0')
-			+ String.format("%8s", Integer.toBinaryString(r.getCamera() & 0xFF)).replace(' ', '0')+  String.format("%8s", Integer.toBinaryString(r.getMotor() & 0xFF)).replace(' ', '0'));
-		}
 	
+		byte one = (byte) 150;
+		byte two = (byte) 25;
+		// prints one, then two
+		for (int i = 7; i >= 0; i--) {
+			System.out.print(one >> i & 1);
+		}
+		System.out.println();
+		for (int i = 7; i >= 0; i--) {
+			System.out.print(two >> i & 1);
+		}
+		System.out.println();
+		
+		// swap at the middle
+		byte three = 0b0;
+		byte four = 0b0;
+		
+		/*
+		for (int i = 7; i > 3; i--) {
+			three <<= 1;
+			four <<= 1;
+			
+			three += two >> i & 1;
+			four += one >> i & 1;
+		}
+		
+		for (int i = 3; i >= 0; i--) {
+			three <<= 1;
+			four <<= 1;
+			
+			three += one >> i & 1;
+			four += two >> i & 1;
+		}
+		*/
+		
+		
+		for (int i = 7; i >= 0; i--) {
+			System.out.print(three >> i & 1);
+		}
+		System.out.println();
+		for (int i = 7; i >= 0; i--) {
+			System.out.print(four >> i & 1);
+		}
+		
 	}
 }
