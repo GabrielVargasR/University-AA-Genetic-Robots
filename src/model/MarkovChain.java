@@ -5,17 +5,18 @@ import java.util.Random;
 public class MarkovChain {
 
     private int currentState;
+    private int initialState;
     private int[][] graph;
     private final int STATES; 
 
-    public MarkovChain(int statesNumber){
-        currentState = 0;
-        STATES = statesNumber;
+    public MarkovChain(int pStatesNumber, int pInitialState){
+        initialState = pInitialState;
+        STATES = pStatesNumber;
         graph = new int[STATES][STATES];
     }
 
     public void resetToInitialState(){
-        currentState = 0;
+        currentState = initialState;
     }
 
     //Recibe un array de tamano STATES X STATES con los pesos de cada arco
