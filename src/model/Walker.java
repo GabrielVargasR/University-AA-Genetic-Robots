@@ -12,16 +12,31 @@ public class Walker {
     MarkovChain chain;
     Robot robot;
     NavigableMap<Double,Integer> statesHash;
+    int[] currentMapPos = {0,0};
 
     public Walker(){
         map = new Map();
         statesHash = createStatesHash();
         int statesNum = statesHash.size() * 4;
-        chain = new MarkovChain(statesNum);
+        int initialState = getState(currentMapPos,3);
+        chain = new MarkovChain(statesNum,initialState);
     }
 
     public void walk(Robot pRobot){
+        //setear markov chain con los valores
+        resetMapPosition();
         
+    }
+
+    private int getState(int[] pPosition, int pDirection){
+        int state;
+
+        return 0;
+    }
+    private double getCost(int[] pPosition){
+        //Se puede tener una matriz con los costos de cada pos
+        //Esto si el costo depende solo de la pos y no de la direccion
+        return 0;
     }
 
     private NavigableMap<Double,Integer> createStatesHash(){
@@ -33,13 +48,18 @@ public class Walker {
         hash.put(3.0, 12);   // 3-4  => 12
         return hash;
     }
-    private int getStateNumber(double pCost,int direction){
+    private int getStateNumber(double pCost,int pDirection){
         if (pCost < statesHash.firstEntry().getKey() || pCost > statesHash.lastEntry().getKey()) {
             System.out.println("Cost out of range");
             return 0;
         } 
         else {
-           return statesHash.floorEntry(pCost).getValue() + direction;
+           return statesHash.floorEntry(pCost).getValue() + pDirection;
         }
+    }
+    private void resetMapPosition(){
+        currentMapPos[0] = 0;
+        currentMapPos[1] = 0;
+        chain.resetToInitialState();
     }
 }
