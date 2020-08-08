@@ -27,17 +27,7 @@ public class Darwin implements IConstants{
 		this.generations.put(genCounter, gen);
 	}
 	
-	// First phase
-	private void populateFirstGen() {
-		ArrayList<Robot> gen = new ArrayList<Robot>();
-		this.genCounter = 1;
-		
-		for (int i = 0; i < POPULATION_SIZE; i++) {
-			gen.add(new Robot(genCounter, i));
-		}
-		
-		this.generations.put(genCounter, gen);
-	}
+	
 	
 	public Robot getIndividual(int pGen, int pNum) {
 		return this.generations.get(pGen).get(pNum);
@@ -50,6 +40,18 @@ public class Darwin implements IConstants{
 	public int getGenAmount() {
 		return this.genCounter;
 	}
+	
+	// First phase
+	private void populateFirstGen() {
+		ArrayList<Robot> gen = new ArrayList<Robot>();
+		this.genCounter = 1;
+		
+		for (int i = 0; i < POPULATION_SIZE; i++) {
+			gen.add(new Robot(genCounter, i));
+		}
+		
+		this.generations.put(genCounter, gen);
+	}	
 	
 	private double evaluateFitness(Robot pRobot) {
 		double distance = pRobot.getDistance();
@@ -141,8 +143,9 @@ public class Darwin implements IConstants{
 		
 		// aquí se mandan a cruzar los genes que tienen que ver con la cadena de Markov
 		
-		Robot new1 = new Robot(gene1, pRobot1, pRobot2);
-		Robot new2 = new Robot(gene2, pRobot1, pRobot2);
+		// pensar como meter el counter de número dentro de la generación
+		Robot new1 = new Robot(gene1, pRobot1, pRobot2, this.genCounter, 0);
+		Robot new2 = new Robot(gene2, pRobot1, pRobot2, this.genCounter, 0);
 		
 		ArrayList<Robot> gen = this.generations.get(this.genCounter);
 		gen.add(new1);
@@ -157,7 +160,7 @@ public class Darwin implements IConstants{
 	
 	// Fifth phase will go inside this method
 	public void run() {
-		// loop
+		// loop. Figure out stopping condition for the algorithm
 		this.genCounter++;
 		this.generations.put(this.genCounter, new ArrayList<Robot>());
 		this.naturalSelection();

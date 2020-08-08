@@ -45,7 +45,7 @@ public class Robot implements IConstants{
 		this.parentB = null;
 	}
 	
-	public Robot(byte[] pGenes, Robot pParA, Robot pParB) {
+	public Robot(byte[] pGenes, Robot pParA, Robot pParB, int pGen, int pNum) {
 		// for new generations
 		this.parentA = pParA;
 		this.parentB = pParB;
