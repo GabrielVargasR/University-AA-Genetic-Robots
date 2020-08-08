@@ -1,15 +1,20 @@
 package model;
 
 import java.util.HashMap;
+import java.util.Random;
 import java.util.ArrayList;
+import java.util.Collections;
+
 
 public class Darwin implements IConstants{
 	private HashMap<Integer, ArrayList<Robot>> generations;
 	private int genCounter;
+	private Random random;
 
 	public Darwin() {
 		this.generations = new HashMap<Integer, ArrayList<Robot>>();
 		this.populateFirstGen();
+		this.random = new Random();
 		
 		// FOR GUI TEST ONLY
 		this.genCounter++;
@@ -22,6 +27,7 @@ public class Darwin implements IConstants{
 		this.generations.put(genCounter, gen);
 	}
 	
+	// First phase
 	private void populateFirstGen() {
 		ArrayList<Robot> gen = new ArrayList<Robot>();
 		this.genCounter = 1;
@@ -57,9 +63,42 @@ public class Darwin implements IConstants{
 		return (cDist + cTime + cCost) / 6.0;
 	}
 	
-	private void naturalSelection() {
-		// loop
-		this.evaluateFitness(null);
+	// Second phase
+	private Robot[] naturalSelection() {
+		ArrayList<Robot> generation = this.generations.get(this.genCounter);
+		Robot[] selected = new Robot[POPULATION_SIZE];
+		
+		double currFit;
+		double fitnessSum = 0.0;
+		for (Robot robot : generation) {
+			// Robots are tested in the map. Their time in the map is set here
+			currFit = this.evaluateFitness(robot);
+			robot.setFitness(currFit);
+			fitnessSum += currFit;
+		}
+		
+		double currProb;
+		ArrayList<Robot> picker = new ArrayList<Robot>();
+		for (Robot robot : generation) {
+			currProb = robot.getFitness() / fitnessSum;
+			currProb *= 100;
+			currProb = Math.floor(currProb);
+			
+			for (int i = 0; i < currProb; i++) {
+				picker.add(robot);
+			}
+		}
+		
+		int index;
+		int selSize = picker.size();
+		Collections.shuffle(picker);
+		for (int i = 0; i < POPULATION_SIZE; i++) {
+			index = this.random.nextInt(selSize);
+			selected[i] = picker.get(index);
+		}
+		
+		return selected;
+		
 	}
 	
 	private byte[] swapGenes(byte chrom1, byte chrom2, int pBottom, int pTop) {
@@ -85,6 +124,7 @@ public class Darwin implements IConstants{
 		return new byte[] {new1, new2};
 	}
 	
+	// Third phase
 	private void cross(Robot pRobot1, Robot pRobot2) {
 		byte[] parent1 = pRobot1.getGenes();
 		byte[] parent2 = pRobot2.getGenes();
@@ -109,9 +149,13 @@ public class Darwin implements IConstants{
 		gen.add(new2);
 	}
 	
+	// Fourth phase
+	private void mutate() {
+		
+	}
 	
-	private void mutate() {}
 	
+	// Fifth phase will go inside this method
 	public void run() {
 		// loop
 		this.genCounter++;

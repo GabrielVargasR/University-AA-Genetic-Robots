@@ -18,6 +18,8 @@ public class Robot implements IConstants{
 	private int distance;
 	private int time;
 	
+	private double fitness;
+	
 	private Robot parentA;
 	private Robot parentB;
 
@@ -135,7 +137,15 @@ public class Robot implements IConstants{
 	public Robot getParentB() {
 		return parentB;
 	}
-
+	
+	public double getFitness() {
+		return this.fitness;
+	}
+	
+	public void setFitness(double pFitness) {
+		this.fitness = pFitness;
+	}
+	
 	public static void main(String[] args) {
 		
 		Robot r = new Robot(1,1);
