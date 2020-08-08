@@ -122,7 +122,7 @@ public class Darwin implements IConstants{
 	}
 	
 	public static void main(String[] args) {
-//		Darwin d = new Darwin();
+		Darwin d = new Darwin();
 //		ArrayList<Robot> gen =  d.getGeneration(1);
 //		
 //		for (Robot r : gen) {
@@ -147,7 +147,7 @@ public class Darwin implements IConstants{
 		byte three = 0b0;
 		byte four = 0b0;
 		
-		
+		/*
 		for (int i = 7; i > 3; i--) {
 			three <<= 1;
 			four <<= 1;
@@ -163,6 +163,8 @@ public class Darwin implements IConstants{
 			three += one >> i & 1;
 			four += two >> i & 1;
 		}
+		*/
+		
 		
 		for (int i = 7; i >= 0; i--) {
 			System.out.print(three >> i & 1);
