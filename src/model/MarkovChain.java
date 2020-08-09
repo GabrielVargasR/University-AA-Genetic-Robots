@@ -9,8 +9,8 @@ public class MarkovChain {
     private int[][] graph;
     private final int STATES; 
 
-    public MarkovChain(int pStatesNumber){
-        initialState = 0;
+    public MarkovChain(int pStatesNumber,int pInitialState){
+        initialState = pInitialState;
         STATES = pStatesNumber;
         graph = new int[STATES][STATES];
     }
@@ -19,8 +19,8 @@ public class MarkovChain {
         currentState = initialState;
     }
 
-    public void setCurrentState(int currentState) {
-        this.currentState = currentState;
+    public void setCurrentState(int pCurrentState) {
+        this.currentState = pCurrentState;
     }
     //Recibe un array de tamano STATES X STATES con los pesos de cada arco
     public void assignGraphWeight(byte[] pWeights){
@@ -49,15 +49,14 @@ public class MarkovChain {
         return pickedAdjacentPos;
     }
 
-    public double[] normalizeEdgesProb(int[] pEdgesWeight,int pEdgesSum){
+    private double[] normalizeEdgesProb(int[] pEdgesWeight,int pEdgesSum){
         double[] edgesProb = new double[pEdgesWeight.length];
         for (int adjacentPosition = 0; adjacentPosition < edgesProb.length; adjacentPosition++) {
             edgesProb[adjacentPosition] = (double)pEdgesWeight[adjacentPosition] / pEdgesSum;
         }
         return edgesProb;
     }
-    //Tested
-    public int pickAdjacentPosition(double[] pEdgesProbability){
+    private int pickAdjacentPosition(double[] pEdgesProbability){
         Random random = new Random();
         double randomBoundary = random.nextDouble();
         double probSum = 0;
@@ -66,19 +65,5 @@ public class MarkovChain {
             probSum = probSum + (pEdgesProbability[chosenEdge++]);
         } 
         return chosenEdge-1;
-    }
-
-    public static void main(String[] args) {
-        MarkovChain markovChain = new MarkovChain(3);
-        int[] d = {1,5,5};
-        double[] t = markovChain.normalizeEdgesProb(d, 10);
-        for (double e : t) {
-            System.out.println(e);
-        }
-        int pick = 1;
-        while(pick != 0){
-            pick = markovChain.pickAdjacentPosition(t);
-            System.out.println(pick);
-        }
     }
 }
