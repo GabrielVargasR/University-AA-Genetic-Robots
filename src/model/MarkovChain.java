@@ -19,6 +19,9 @@ public class MarkovChain {
         currentState = initialState;
     }
 
+    public void setCurrentState(int currentState) {
+        this.currentState = currentState;
+    }
     //Recibe un array de tamano STATES X STATES con los pesos de cada arco
     public void assignGraphWeight(byte[] pWeights){
         int weightsIndex = 0;
@@ -47,7 +50,6 @@ public class MarkovChain {
         System.out.println(edgesProb.toString());
 
         int pickedAdjacentPos = pickAdjacentPosition(edgesProb);
-        currentState = pAdjacentStates[pickedAdjacentPos];
         return pickedAdjacentPos;
     }
 

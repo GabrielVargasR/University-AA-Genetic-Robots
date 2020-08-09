@@ -24,22 +24,18 @@ public class Walker implements IConstants {
             int currentTerrain = map.getTerrain(currentMapPos);
             if (robot.canTraverse(currentTerrain) && robot.consumeBattery(currentTerrain)) {
                 robot.increaseTime();
-                int chosenDir = chooseDir();
+                int[] adjacentStates = getAdjacentStates();
+                int chosenDir = chain.getNextMove(adjacentStates);
                 int[] nextPos = map.getAdjacentPos(currentMapPos, chosenDir);
                 if (nextPos != null) {
                     currentMapPos = nextPos;
+                    chain.setCurrentState(adjacentStates[chosenDir]);
                 }
                 continue;
             }
             break;
         }
     }
-
-    private int chooseDir() {
-        int[] adjacentStates = getAdjacentStates();
-        return chain.getNextMove(adjacentStates);
-    }
-
     private int[] getAdjacentStates() {
         int[] adjacentStates = new int[4];
         for (int direction = 0; direction < 4; direction++) {
@@ -62,7 +58,8 @@ public class Walker implements IConstants {
 
     private double getCost(int[] pPosition,int squareNum) {
         int terrainType = map.getTerrain(pPosition);
-        //Se iban a agregar pesos según el squareNum
+        //!
+        //Se iban a agregar pesos según el squareNum pero hay que rethink eso
         //return robot.calculateTerrainBattConsumption(terrainType) / squareNum  ;
         return robot.calculateTerrainBattConsumption(terrainType);
     }
