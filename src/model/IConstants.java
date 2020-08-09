@@ -15,4 +15,9 @@ public interface IConstants {
 	
 	public static final String[] HEADER = {"ID", "Fitness", "Battery", "Camera", "Motor", "Chromosomes", "ParentA", "ParentB"};
 	public static final int ROW_SIZE = HEADER.length;
+
+	public static final int UP_DIRECTION = 0;
+	public static final int DOWN_DIRECTION = 1;
+	public static final int LEFT_DIRECTION = 2;
+	public static final int RIGHT_DIRECTION = 3;
 }
