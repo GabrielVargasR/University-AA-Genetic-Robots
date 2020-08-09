@@ -9,8 +9,8 @@ public class MarkovChain {
     private int[][] graph;
     private final int STATES; 
 
-    public MarkovChain(int pStatesNumber, int pInitialState){
-        initialState = pInitialState;
+    public MarkovChain(int pStatesNumber){
+        initialState = 0;
         STATES = pStatesNumber;
         graph = new int[STATES][STATES];
     }

@@ -14,10 +14,7 @@ public class Walker implements IConstants {
         map = new Map();
         statesHash = createStatesHash();
         int statesNum = statesHash.size() * 4;
-        //TODO 
-        //Agregar estado inicial 0 para empezar
-        int initialState = getState(currentMapPos, 3);
-        chain = new MarkovChain(statesNum, initialState);
+        chain = new MarkovChain(statesNum+1); //+1 para agregar el estado inicial
     }
 
     public void walk(Robot pRobot) {
@@ -73,10 +70,11 @@ public class Walker implements IConstants {
     private NavigableMap<Double, Integer> createStatesHash() {
         NavigableMap<Double, Integer> hash = new TreeMap<Double, Integer>();
         // Multiplos de 4 para dejar espacio para las 4 direcciones
-        hash.put(1.0, 0); // 0-1 => 0
-        hash.put(2.0, 4); // 1-2 => 4
-        hash.put(3.0, 8); // 2-3 => 8
-        hash.put(4.0, 12); // 3-4 => 12
+        //Empieza en 1 para dejar campo al estado inicial
+        hash.put(1.0, 1); // 0-1 => 1
+        hash.put(2.0, 5); // 1-2 => 5
+        hash.put(3.0, 9); // 2-3 => 9
+        hash.put(4.0, 13); // 3-4 => 13
         return hash;
     }
 
