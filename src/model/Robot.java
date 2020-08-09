@@ -19,6 +19,8 @@ public class Robot implements IConstants{
 	private int time;
 	private int batteryLevel;
 	
+	private double fitness;
+	
 	private Robot parentA;
 	private Robot parentB;
 
@@ -48,7 +50,7 @@ public class Robot implements IConstants{
 
 	}
 	
-	public Robot(byte[] pGenes, Robot pParA, Robot pParB) {
+	public Robot(byte[] pGenes, Robot pParA, Robot pParB, int pGen, int pNum) {
 		// for new generations
 		this.parentA = pParA;
 		this.parentB = pParB;
@@ -168,7 +170,15 @@ public class Robot implements IConstants{
 	public Robot getParentB() {
 		return parentB;
 	}
-
+	
+	public double getFitness() {
+		return this.fitness;
+	}
+	
+	public void setFitness(double pFitness) {
+		this.fitness = pFitness;
+	}
+	
 	public static void main(String[] args) {
 		
 		Robot r = new Robot(1,1);
