@@ -25,6 +25,9 @@ public class Map implements IConstants{
 	}
 
 	public int getTerrain(int[] pPos){
+		if(pPos == null){
+			return BLOCKED_TERRAIN;
+		}
 		return layout[pPos[0]][pPos[1]];
 	}
 

@@ -24,6 +24,6 @@ public interface IConstants {
 	public static final int EASY_TERRAIN = 0;
 	public static final int MID_TERRAIN = 1;
 	public static final int HARD_TERRAIN = 2;
-	public static final int BLOCK_TERRAIN = 3;
+	public static final int BLOCKED_TERRAIN = 3;
 
 }
