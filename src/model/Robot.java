@@ -72,13 +72,17 @@ public class Robot implements IConstants{
 		return batteryLevel < 0;
 	}
 
-	public int calculateBatteryConsumption(int pTerrainType){
+	public int calculateTerrainBattConsumption(int pTerrainType){
+		return 1 + pTerrainType;
+	}
+	public void increaseTime() {
+		time++;
+	}
+	private int calculateBatteryConsumption(int pTerrainType){
 		//toma por hecho que puede pasar por ese terreno
-		//TODO calculo provisional
-		return 1 + pTerrainType + cameraType;
+		return calculateTerrainBattConsumption(pTerrainType)+ cameraType;
 	}
 
-	
 	private void constructGenes() {
 		this.genes = new byte[GENE_SIZE];
 		this.genes[0] = this.motor;
@@ -100,7 +104,6 @@ public class Robot implements IConstants{
 	private void calculateCost() {
 		this.cost = (double) (this.motorType + this.cameraType + this.batteryType) / 3;
 	}
-	
 	// ---------------------------- Getters & Setters ----------------------------
 	public int getBatteryLevel() {
 		return batteryLevel;
