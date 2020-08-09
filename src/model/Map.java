@@ -23,4 +23,37 @@ public class Map implements IConstants{
 	public int getMaxDistance() {
 		return this.maxDistance;
 	}
+
+	public int getTerrain(int[] pPos){
+		return layout[pPos[0]][pPos[1]];
+	}
+
+	public int[] getAdjacentPos(int[] pPos,int pDirection){
+		int posX = pPos[0];
+		int posY = pPos[1];
+		switch (pDirection) {
+			case UP_DIRECTION:
+				posY++;
+				break;
+			case DOWN_DIRECTION:
+				posY--;
+				break;
+			case LEFT_DIRECTION:
+				posX--;
+				break;
+			case RIGHT_DIRECTION:
+				posX++;
+				break;
+			default:
+				break;
+		}
+		int indexSum = posX + posY;
+		if(posX < 0 || posY < 0 || indexSum >= MAP_SIZE){
+			return null;
+		}
+		int[] newPos = new int[2];
+		newPos[0] = posX;
+		newPos[1] = posY;
+		return newPos;
+	}
 }
