@@ -17,9 +17,11 @@ public class Robot implements IConstants{
 	private double cost;
 	private int distance;
 	private int time;
+	private int batteryLevel;
 	
 	private Robot parentA;
 	private Robot parentB;
+
 
 	public Robot(int pGen, int pNum) {
 		// for first generation
@@ -34,6 +36,8 @@ public class Robot implements IConstants{
 		this.motorType = this.calculateType(this.motor);
 		this.cameraType = this.calculateType(this.camera);
 		this.batteryType = this.calculateType(this.battery);
+
+		batteryLevel = 100; //TODO extraerlo de los genes
 		
 		this.calculateCost();
 		
@@ -41,6 +45,7 @@ public class Robot implements IConstants{
 		
 		this.parentA = null;
 		this.parentB = null;
+
 	}
 	
 	public Robot(byte[] pGenes, Robot pParA, Robot pParB) {
@@ -51,6 +56,28 @@ public class Robot implements IConstants{
 		
 		// TODO extract info from genes
 	}
+
+	public boolean canTraverse(int pTerrainType){
+		return (motorType - pTerrainType) >= 0;
+	}
+
+	public int getCameraVision(){
+		return getCameraType()+1;
+	}
+
+	public boolean consumeBaterry(int pTerrainType){
+		
+		batteryLevel =- calculateBatteryConsumption(pTerrainType);
+
+		return batteryLevel < 0;
+	}
+
+	public int calculateBatteryConsumption(int pTerrainType){
+		//toma por hecho que puede pasar por ese terreno
+		//TODO calculo provisional
+		return 1 + pTerrainType + cameraType;
+	}
+	
 	
 	private void constructGenes() {
 		this.genes = new byte[GENE_SIZE];
@@ -75,6 +102,9 @@ public class Robot implements IConstants{
 	}
 	
 	// ---------------------------- Getters & Setters ----------------------------
+	public int getBatteryLevel() {
+		return batteryLevel;
+	}
 	public String getId() {
 		return this.id;
 	}
