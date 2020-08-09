@@ -4,11 +4,11 @@ import java.util.NavigableMap;
 import java.util.TreeMap;
 
 public class Walker implements IConstants {
-    Map map;
-    MarkovChain chain;
-    Robot robot;
-    NavigableMap<Double, Integer> statesHash;
-    int[] currentMapPos = { 0, 0 };
+    private Map map;
+    private MarkovChain chain;
+    private Robot robot;
+    private NavigableMap<Double, Integer> statesHash;
+    private int[] currentMapPos = { 0, 0 };
 
     public Walker() {
         map = new Map();
@@ -18,6 +18,7 @@ public class Walker implements IConstants {
     }
 
     public void walk(Robot pRobot) {
+        robot = pRobot;
         chain.assignGraphWeight(robot.getGenes());
         resetMapPosition();
         while (robot.getBatteryLevel() > 0 && !arrived()) {
@@ -60,7 +61,7 @@ public class Walker implements IConstants {
         int terrainType = map.getTerrain(pPosition);
         //!
         //Se iban a agregar pesos según el squareNum pero hay que rethink eso
-        //return robot.calculateTerrainBattConsumption(terrainType) / squareNum  ;
+        //return robot.calculateTerrainBattConsumption(terrainType) / (double)squareNum  ;
         return robot.calculateTerrainBattConsumption(terrainType);
     }
 
@@ -95,11 +96,8 @@ public class Walker implements IConstants {
     }
 
     public static void main(String[] args) {
-        int[] a = { 1, 1 };
-        int[] b = { 1, 1 };
-        if (a.equals(b)) {
-            System.out.println("Si");
-        }
-        System.out.println("Si");
+        Robot robot = new Robot(1,1);
+        Walker walker = new Walker();
+        walker.walk(robot);
     }
 }
