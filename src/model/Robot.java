@@ -65,7 +65,7 @@ public class Robot implements IConstants{
 		return getCameraType()+1;
 	}
 
-	public boolean consumeBaterry(int pTerrainType){
+	public boolean consumeBattery(int pTerrainType){
 		
 		batteryLevel =- calculateBatteryConsumption(pTerrainType);
 
@@ -77,7 +77,7 @@ public class Robot implements IConstants{
 		//TODO calculo provisional
 		return 1 + pTerrainType + cameraType;
 	}
-	
+
 	
 	private void constructGenes() {
 		this.genes = new byte[GENE_SIZE];
