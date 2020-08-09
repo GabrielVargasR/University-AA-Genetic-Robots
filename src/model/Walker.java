@@ -13,8 +13,8 @@ public class Walker implements IConstants {
     public Walker() {
         map = new Map();
         statesHash = createStatesHash();
-        int statesNum = statesHash.size() * 4;
-        chain = new MarkovChain(statesNum+1); //+1 para agregar el estado inicial
+        int statesNum = 1+ (statesHash.size() * 4);
+        chain = new MarkovChain(statesNum);
     }
 
     public void walk(Robot pRobot) {
