@@ -59,21 +59,19 @@ public class MarkovChain {
     //Tested
     public int pickAdjacentPosition(double[] pEdgesProbability){
         Random random = new Random();
-        //? Podria dar problemas con probs muy pequeñas
-        //nextInt lo da entre 0 y 1 si se cambia podria dar 0 entonces habria que poner un i 
-        double randomBoundary = random.nextInt(100)+1;
+        double randomBoundary = random.nextDouble();
         double probSum = 0;
         int chosenEdge = 0;
         while(probSum < randomBoundary){
-            probSum = probSum + (pEdgesProbability[chosenEdge++])*100;
+            probSum = probSum + (pEdgesProbability[chosenEdge++]);
         } 
         return chosenEdge-1;
     }
 
     public static void main(String[] args) {
         MarkovChain markovChain = new MarkovChain(3);
-        int[] d = {1,5,10};
-        double[] t = markovChain.normalizeEdgesProb(d, 16);
+        int[] d = {1,5,5};
+        double[] t = markovChain.normalizeEdgesProb(d, 10);
         for (double e : t) {
             System.out.println(e);
         }
