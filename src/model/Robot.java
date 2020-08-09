@@ -17,11 +17,13 @@ public class Robot implements IConstants{
 	private double cost;
 	private int distance;
 	private int time;
+	private int batteryLevel;
 	
 	private double fitness;
 	
 	private Robot parentA;
 	private Robot parentB;
+
 
 	public Robot(int pGen, int pNum) {
 		// for first generation
@@ -36,6 +38,8 @@ public class Robot implements IConstants{
 		this.motorType = this.calculateType(this.motor);
 		this.cameraType = this.calculateType(this.camera);
 		this.batteryType = this.calculateType(this.battery);
+
+		batteryLevel = 100; //TODO extraerlo de los genes
 		
 		this.calculateCost();
 		
@@ -43,6 +47,7 @@ public class Robot implements IConstants{
 		
 		this.parentA = null;
 		this.parentB = null;
+
 	}
 	
 	public Robot(byte[] pGenes, Robot pParA, Robot pParB, int pGen, int pNum) {
@@ -53,7 +58,33 @@ public class Robot implements IConstants{
 		
 		// TODO extract info from genes
 	}
-	
+
+	public boolean canTraverse(int pTerrainType){
+		return (motorType - pTerrainType) >= 0;
+	}
+
+	public int getCameraVision(){
+		return getCameraType()+1;
+	}
+
+	public boolean consumeBattery(int pTerrainType){
+		
+		batteryLevel =- calculateBatteryConsumption(pTerrainType);
+
+		return batteryLevel < 0;
+	}
+
+	public int calculateTerrainBattConsumption(int pTerrainType){
+		return 1 + pTerrainType;
+	}
+	public void increaseTime() {
+		time++;
+	}
+	private int calculateBatteryConsumption(int pTerrainType){
+		//toma por hecho que puede pasar por ese terreno
+		return calculateTerrainBattConsumption(pTerrainType)+ cameraType;
+	}
+
 	private void constructGenes() {
 		this.genes = new byte[GENE_SIZE];
 		this.genes[0] = this.motor;
@@ -75,8 +106,10 @@ public class Robot implements IConstants{
 	private void calculateCost() {
 		this.cost = (double) (this.motorType + this.cameraType + this.batteryType) / 3;
 	}
-	
 	// ---------------------------- Getters & Setters ----------------------------
+	public int getBatteryLevel() {
+		return batteryLevel;
+	}
 	public String getId() {
 		return this.id;
 	}
