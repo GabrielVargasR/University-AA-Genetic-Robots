@@ -72,6 +72,7 @@ public class Darwin implements IConstants{
 		double fitnessSum = 0.0;
 		for (Robot robot : generation) {
 			// Robots are tested in the map. Their time in the map is set here
+			//Walker.walk(robot)
 			currFit = this.evaluateFitness(robot);
 			robot.setFitness(currFit);
 			fitnessSum += currFit;

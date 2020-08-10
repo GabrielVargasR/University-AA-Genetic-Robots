@@ -32,6 +32,8 @@ public class Robot implements IConstants {
 	}
 
 	private void initializeRobot(byte[] pGenes, Robot pParA, Robot pParB, int pGen, int pNum){
+		this.id = "g" + pGen + "-n" + pGen;
+		this.genes = pGenes;
 		this.parentA = pParA;
 		this.parentB = pParB;
 		this.genes = pGenes;
