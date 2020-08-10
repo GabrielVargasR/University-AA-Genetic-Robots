@@ -8,13 +8,16 @@ public class Walker implements IConstants {
     private MarkovChain chain;
     private Robot robot;
     private NavigableMap<Double, Integer> statesHash;
-    private int[] currentMapPos = { 0, 0 };
+    private int[] initialMapPos;
+    private int[] currentMapPos;
 
     public Walker() {
         map = new Map();
         statesHash = createStatesHash();
         int statesNum = 1 + (statesHash.size() * 4);
         chain = new MarkovChain(statesNum, INITIAL_STATE);
+        initialMapPos = MAP_START;
+        currentMapPos = initialMapPos;
     }
 
     public void walk(Robot pRobot) {
@@ -101,8 +104,7 @@ public class Walker implements IConstants {
     }
 
     private void resetMapPosition() {
-        currentMapPos[0] = 0;
-        currentMapPos[1] = 0;
+        currentMapPos = initialMapPos;
         chain.resetToInitialState();
     }
 
