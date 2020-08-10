@@ -65,7 +65,7 @@ public class Darwin implements IConstants{
 	
 	// Second phase
 	private Robot[] naturalSelection() {
-		ArrayList<Robot> generation = this.generations.get(this.genCounter);
+		ArrayList<Robot> generation = this.generations.get(--this.genCounter);
 		Robot[] selected = new Robot[POPULATION_SIZE];
 		
 		double currFit;
@@ -125,7 +125,7 @@ public class Darwin implements IConstants{
 	}
 	
 	// Third phase
-	private void cross(Robot pRobot1, Robot pRobot2) {
+	private void cross(Robot pRobot1, Robot pRobot2, int pRobNum) {
 		byte[] parent1 = pRobot1.getGenes();
 		byte[] parent2 = pRobot2.getGenes();
 		byte[] gene1 = new byte[GENE_SIZE];
@@ -133,17 +133,14 @@ public class Darwin implements IConstants{
 		
 		byte[] temp;
 		
-		for(int i = 0; i < 3; i++) {
+		for(int i = 0; i < GENE_SIZE; i++) {
 			temp = this.swapGenes(parent1[i], parent2[i], 3, 7);
 			gene1[i] = temp[0];
 			gene2[i] = temp[1];
 		}
 		
-		// aquí se mandan a cruzar los genes que tienen que ver con la cadena de Markov
-		
-		// pensar como meter el counter de número dentro de la generación
-		Robot new1 = new Robot(gene1, pRobot1, pRobot2, this.genCounter, 0);
-		Robot new2 = new Robot(gene2, pRobot1, pRobot2, this.genCounter, 0);
+		Robot new1 = new Robot(gene1, pRobot1, pRobot2, this.genCounter, pRobNum);
+		Robot new2 = new Robot(gene2, pRobot1, pRobot2, this.genCounter, ++pRobNum);
 		
 		ArrayList<Robot> gen = this.generations.get(this.genCounter);
 		gen.add(new1);
@@ -158,12 +155,18 @@ public class Darwin implements IConstants{
 	
 	// Fifth phase will go inside this method
 	public void run() {
-		// loop. Figure out stopping condition for the algorithm
-		this.genCounter++;
-		this.generations.put(this.genCounter, new ArrayList<Robot>());
-		this.naturalSelection();
-		this.cross(null, null);
-		this.mutate();
+		
+		Robot[] selected;
+		// temporary condition. Can be changed to take into account generation variance or genneral fitness
+		while (this.genCounter < 50) {
+			this.genCounter++;
+			this.generations.put(this.genCounter, new ArrayList<Robot>());
+			selected = this.naturalSelection();
+			for (int i = 0; i < POPULATION_SIZE; i+=2) {
+				this.cross(selected[i], selected[++i], i);
+			}
+			this.mutate();
+		}
 	}
 	
 	public static void main(String[] args) {
