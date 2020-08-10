@@ -28,7 +28,7 @@ public class Walker implements IConstants {
                 int[] adjacentStates = getAdjacentStates();
                 int chosenDir = chain.getNextMove(adjacentStates);
                 int[] nextPos = map.getAdjacentPos(currentMapPos, chosenDir);
-                if (nextPos != currentMapPos) {
+                if (nextPos != null) {
                     currentMapPos = nextPos;
                     chain.setCurrentState(adjacentStates[chosenDir]);
                 }
