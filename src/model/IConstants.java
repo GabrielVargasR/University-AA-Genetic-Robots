@@ -35,7 +35,7 @@ public interface IConstants {
 
 	public static final int INITIAL_STATE = 0;
 
-	//TODO definir battery levels altos
+	// TODO definir battery levels altos
 	//Con 100 llegaba a 16 movimientos con motor bajo
 	public static final int[] BATTERY_LEVELS = {100,200,300};
 }
