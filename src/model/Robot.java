@@ -32,6 +32,8 @@ public class Robot implements IConstants {
 	}
 
 	private void initializeRobot(byte[] pGenes, Robot pParA, Robot pParB, int pGen, int pNum){
+		this.id = "g" + pGen + "-n" + pGen;
+		this.genes = pGenes;
 		this.parentA = pParA;
 		this.parentB = pParB;
 		this.motorType = this.calculateType(genes[GENE_MOTOR_INDEX]);
@@ -78,7 +80,7 @@ public class Robot implements IConstants {
 		Random rand = new Random();
 		byte[] genesArray = new byte[GENE_SIZE];
 		for (int byteNumber = 0; byteNumber < GENE_SIZE; byteNumber++) {
-			genes[byteNumber] = (byte) rand.nextInt(256);
+			genesArray[byteNumber] = (byte) rand.nextInt(256);
 		}
 		return genesArray;
 	}
