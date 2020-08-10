@@ -162,10 +162,10 @@ public class Darwin implements IConstants{
 			index = this.random.nextInt(bits);
 			bit = index % 8;
 			byteIndex = index / 8;
-			robot = byteIndex % POPULATION_SIZE;
-			byteIndex /= POPULATION_SIZE; // revisar sin sueño, no confío que esto no tenga errores
+			robot = byteIndex / POPULATION_SIZE;
+			byteIndex %= POPULATION_SIZE; 
 			
-			// gen.get(robot).mutate(bit, byteIndex);
+			 gen.get(robot).mutate(bit, byteIndex);
 		}
 	}
 	
@@ -240,6 +240,29 @@ public class Darwin implements IConstants{
 		}
 		*/
 		
-		System.out.println(10/8);
+		/*
+		Random random = new Random();
+		byte[] a = {(byte) 0b10101010, (byte) 0b11110000, (byte) 0b10001000};
+		byte[] b = {(byte) 0b11110000, (byte) 0b10001000, (byte) 0b10101010};
+		byte[] c = {(byte) 0b10001000, (byte) 0b10101010, (byte) 0b11110000};
+		
+		int bits = 3 * 3 * 8;
+		int modAmount = 2;
+		
+		int index; // which bit gets modified (number relative to the whole matrix)
+		int bit; // which bit gets modified (number relative to the byte)
+		int byteIndex; // which byte in a robot's genes gets modified
+		int robot; // which robot gets modified
+		for (int i = 0; i < modAmount; i++) {
+			index = random.nextInt(bits);
+			bit = index % 8;
+			byteIndex = index / 8;
+			robot = byteIndex / 3;
+			byteIndex %= 3;
+			
+			
+			System.out.println("Index: " + index + ", Bit: " + bit + ", byteIndex: " + byteIndex + ", Robot: " + robot);
+		}
+		*/
 	}
 }
