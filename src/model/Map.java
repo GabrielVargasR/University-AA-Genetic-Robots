@@ -52,7 +52,7 @@ public class Map implements IConstants{
 		}
 		int indexSum = posX + posY;
 		if(posX < 0 || posY < 0 || indexSum >= MAP_SIZE){
-			return null;
+			return pPos;
 		}
 		int[] newPos = new int[2];
 		newPos[0] = posX;

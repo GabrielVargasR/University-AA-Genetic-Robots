@@ -13,7 +13,7 @@ public class Walker implements IConstants {
     public Walker() {
         map = new Map();
         statesHash = createStatesHash();
-        int statesNum = 1+ (statesHash.size() * 4);
+        int statesNum = 1 + (statesHash.size() * 4);
         chain = new MarkovChain(statesNum,INITIAL_STATE);
     }
 
@@ -28,7 +28,7 @@ public class Walker implements IConstants {
                 int[] adjacentStates = getAdjacentStates();
                 int chosenDir = chain.getNextMove(adjacentStates);
                 int[] nextPos = map.getAdjacentPos(currentMapPos, chosenDir);
-                if (nextPos != null) {
+                if (nextPos != currentMapPos) {
                     currentMapPos = nextPos;
                     chain.setCurrentState(adjacentStates[chosenDir]);
                 }
@@ -96,7 +96,7 @@ public class Walker implements IConstants {
     }
 
     public static void main(String[] args) {
-        Robot robot = new Robot(1,1);
+        Robot robot = new Robot(1);
         Walker walker = new Walker();
         walker.walk(robot);
     }
