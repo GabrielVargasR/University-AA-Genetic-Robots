@@ -19,7 +19,7 @@ public class Walker implements IConstants {
 
     public void walk(Robot pRobot) {
         robot = pRobot;
-        chain.assignGraphWeight(robot.getGenes());
+        chain.assignGraphWeight(robot.getGenes(),GENE_EDGES_START_INDEX);
         resetMapPosition();
         while (robot.getBatteryLevel() > 0 && !arrived()) {
             int currentTerrain = map.getTerrain(currentMapPos);

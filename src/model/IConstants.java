@@ -3,6 +3,7 @@ package model;
 public interface IConstants {
 	public static final int POPULATION_SIZE = 20;
 	public static final int GENE_SIZE = 8;
+	public static final int GENE_EDGES_START_INDEX = 3;
 	
 	public static int MAP_SIZE = 20;
 	public static int[] MAP_START = {19,0};
@@ -27,5 +28,4 @@ public interface IConstants {
 	public static final int BLOCKED_TERRAIN = 3;
 
 	public static final int INITIAL_STATE = 0;
-
 }
