@@ -27,8 +27,6 @@ public class Darwin implements IConstants{
 		this.generations.put(genCounter, gen);
 	}
 	
-	
-	
 	public Robot getIndividual(int pGen, int pNum) {
 		return this.generations.get(pGen).get(pNum);
 	}
@@ -100,7 +98,6 @@ public class Darwin implements IConstants{
 		}
 		
 		return selected;
-		
 	}
 	
 	private byte[] swapGenes(byte chrom1, byte chrom2, int pBottom, int pTop) {
@@ -194,7 +191,7 @@ public class Darwin implements IConstants{
 		byte three = 0b0;
 		byte four = 0b0;
 		
-		/*
+		
 		for (int i = 7; i > 3; i--) {
 			three <<= 1;
 			four <<= 1;
@@ -210,15 +207,15 @@ public class Darwin implements IConstants{
 			three += one >> i & 1;
 			four += two >> i & 1;
 		}
-		*/
+		
 		
 		
 		for (int i = 7; i >= 0; i--) {
-			System.out.print(three >> i & 1);
+			System.out.print(four >> i & 1);
 		}
 		System.out.println();
 		for (int i = 7; i >= 0; i--) {
-			System.out.print(four >> i & 1);
+			System.out.print(three >> i & 1);
 		}
 		
 	}
