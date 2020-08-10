@@ -2,8 +2,14 @@ package model;
 
 public interface IConstants {
 	public static final int POPULATION_SIZE = 20;
-	public static final int GENE_SIZE = 8;
-	public static final int GENE_EDGES_START_INDEX = 3;
+
+	//MOTOR + CAMERA + BATTERY + STATES x STATES
+	public static final int GENE_SIZE = 292;
+
+	public static final int GENE_MOTOR_INDEX = 0;
+	public static final int GENE_CAMERA_INDEX = 1;
+	public static final int GENE_BATTERY_INDEX = 2;
+	public static final int GENE_EDGES_INDEX = 3;
 	
 	public static int MAP_SIZE = 20;
 	public static int[] MAP_START = {19,0};
@@ -28,4 +34,8 @@ public interface IConstants {
 	public static final int BLOCKED_TERRAIN = 3;
 
 	public static final int INITIAL_STATE = 0;
+
+	//TODO definir battery levels altos
+	//Con 100 llegaba a 16 movimientos con motor bajo
+	public static final int[] BATTERY_LEVELS = {100,200,300};
 }
