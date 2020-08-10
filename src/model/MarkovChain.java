@@ -22,9 +22,11 @@ public class MarkovChain {
     public void setCurrentState(int pCurrentState) {
         this.currentState = pCurrentState;
     }
-    //Recibe un array de tamano STATES X STATES con los pesos de cada arco
-    public void assignGraphWeight(byte[] pWeights){
-        int weightsIndex = 0;
+    //*Parametros:
+    //* Byte array of size STATES x STATES with graph edges wights
+    //* Index to start getting bytes from array
+    public void assignGraphWeight(byte[] pWeights,int pStartIndex){
+        int weightsIndex = pStartIndex;
         for ( int row = 0; row < STATES; row++) {
             for (int col = 0; col < STATES; col++) {
                 graph[row][col] = pWeights[weightsIndex];
