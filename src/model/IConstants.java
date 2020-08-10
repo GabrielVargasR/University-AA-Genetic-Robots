@@ -11,6 +11,8 @@ public interface IConstants {
 	public static final int GENE_BATTERY_INDEX = 2;
 	public static final int GENE_EDGES_INDEX = 3;
 	
+	public static final double MUTATION_PERCENTAGE = 0.0015;
+	
 	public static int MAP_SIZE = 20;
 	public static int[] MAP_START = {19,0};
 	public static int[] MAP_END = {0,19};
