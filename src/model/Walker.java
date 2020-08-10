@@ -32,10 +32,13 @@ public class Walker implements IConstants {
                     currentMapPos = nextPos;
                     chain.setCurrentState(adjacentStates[chosenDir]);
                 }
+                System.out.println("Estoy dentro del if");
                 continue;
             }
+            System.out.println("Estoy afuera del if");
             break;
         }
+        System.out.println(robot.getBatteryLevel());
     }
     private int[] getAdjacentStates() {
         int[] adjacentStates = new int[4];
@@ -49,7 +52,7 @@ public class Walker implements IConstants {
         int visibleSquares = robot.getCameraVision();
         double terrainTraverseCost = 0;
         int[] position = pPosition;
-        for (int square = 1; square <+ visibleSquares; square++) {
+        for (int square = 1; square <= visibleSquares; square++) {
             position = map.getAdjacentPos(position, pDirection);
             terrainTraverseCost+= getCost(position, square);
         }
@@ -79,6 +82,7 @@ public class Walker implements IConstants {
     private int getStateNumber(double pCost, int pDirection) {
         if (pCost < statesHash.firstEntry().getKey() || pCost > statesHash.lastEntry().getKey()) {
             System.out.println("Cost out of range");
+            System.out.println(pCost);
             return 0;
         } else {
             return statesHash.floorEntry(pCost).getValue() + pDirection;

@@ -32,6 +32,7 @@ public class Map implements IConstants{
 	}
 
 	public int[] getAdjacentPos(int[] pPos,int pDirection){
+		if(pPos == null) return null;
 		int posX = pPos[0];
 		int posY = pPos[1];
 		switch (pDirection) {
@@ -52,7 +53,7 @@ public class Map implements IConstants{
 		}
 		int indexSum = posX + posY;
 		if(posX < 0 || posY < 0 || indexSum >= MAP_SIZE){
-			return pPos;
+			return null;
 		}
 		int[] newPos = new int[2];
 		newPos[0] = posX;
