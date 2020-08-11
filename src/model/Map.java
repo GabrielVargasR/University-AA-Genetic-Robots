@@ -26,14 +26,12 @@ public class Map implements IConstants{
 		return this.layout;
 	}
 	
-	public int calculateDistance(int pX, int pY) {
-		int distance = distances[pX][pY];
+	public int calculateDistance(int pRow, int pCol) {
+		int distance = distances[pRow][pCol];
 		if(distance == -1){
-			Position pos = new Position(pX,pY);
+			Position pos = new Position(pRow,pCol);
 			distance = pathGetter.getPath(graph, pos, new Position(MAP_END[0], MAP_END[1])).size();
-			System.out.println("Distance");
-			System.out.println(distance);
-			distances[pX][pY] = distance;
+			distances[pRow][pCol] = distance;
 		}
 		return distance;
 	}
@@ -58,69 +56,67 @@ public class Map implements IConstants{
 
 	public int[] getAdjacentPos(int[] pPos,int pDirection){
 		if(pPos == null) return null;
-		int posX = pPos[0];
-		int posY = pPos[1];
-
+		int row = pPos[0];
+		int col = pPos[1];
 		switch (pDirection) {
 			case UP_DIRECTION:
-				posX--;
+				row--;
 				break;
 			case DOWN_DIRECTION:
-				posX++;
+				row++;
 				break;
 			case LEFT_DIRECTION:
-				posY--;
+				col--;
 				break;
 			case RIGHT_DIRECTION:
-				posY++;
+				col++;
 				break;
 			default:
 				break;
 		}
-		int indexSum = posX + posY;
-		if(posX < 0 || posY < 0 || indexSum >= MAP_SIZE){
+		int indexSum = row + col;
+		if(row < 0 || col < 0 || indexSum >= MAP_SIZE){
 			return null;
 		}
-
 		int[] newPos = new int[2];
-		newPos[0] = posX;
-		newPos[1] = posY;
+		newPos[0] = row;
+		newPos[1] = col;
 		return newPos;
 	}
 
 	private Position getAdjacentPosition(Position pPos, int pDirection){
 		if(pPos == null) return null;
-		int posX = pPos.getX();
-		int posY = pPos.getY();
+		int row = pPos.getX();
+		int col = pPos.getY();
 		switch (pDirection) {
 			case UP_DIRECTION:
-				posX--;
+				row--;
 				break;
 			case DOWN_DIRECTION:
-				posX++;
+				row++;
 				break;
 			case LEFT_DIRECTION:
-				posY--;
+				col--;
 				break;
 			case RIGHT_DIRECTION:
-				posY++;
+				col++;
 				break;
 			default:
 				break;
 		}
-		int indexSum = posX + posY;
-		if(posX < 0 || posY < 0 || indexSum >= MAP_SIZE){
+		int indexSum = row + col;
+		if(row < 0 || col < 0 || indexSum >= MAP_SIZE){
 			return null;
 		}
-		Position newPos = new Position(posX,posY);
+		Position newPos = new Position(row,col);
 		return newPos;
 	}
 	
 	private void initDistances(){
 		distances = new int[MAP_SIZE][MAP_SIZE];
-		for (int i = 0; i < MAP_SIZE; i++) {
-			for (int j = 0; j < MAP_SIZE; j++) {
-				distances[i][j] = -1;
+		for (int row = 0; row < MAP_SIZE; row++) {
+			for (int col = 0; col < MAP_SIZE; col++) {
+				distances[row][col] = -1;
 			}
 		}
 	}
@@ -131,27 +127,27 @@ public class Map implements IConstants{
 		Position leftPos;
 		Position upPos = null;
 		int weight = 0;
-		for (int x = 0; x < MAP_SIZE; x++) {
+		for (int row = 0; row < MAP_SIZE; row++) {
 			leftPos = null;
-			for (int y = 0; y < MAP_SIZE; y++) {
-				Position pos = new Position(x,y);
+			for (int col = 0; col < MAP_SIZE; col++) {
+				Position pos = new Position(row,col);
 				weight = 0;
 				upPos = getAdjacentPosition(pos, UP_DIRECTION);
 				graph.addNode(pos);
 				if(getTerrainByPos(pos) == BLOCKED_TERRAIN){
 					weight = 100;
 				}
-				graph.addEdge(leftPos, pos, weight);
-				graph.addEdge(upPos, pos, weight);
+				graph.addEdge(pos, leftPos, weight);
+				graph.addEdge(pos, upPos, weight);
 				leftPos = pos;
 			}
 		}
 	}
 		public static void main(String[] args) {
 		Map map = new Map();
-		System.out.println(map.graph.getEdges().size());
-		
-		int distance = map.calculateDistance(0, 0);
-		System.out.println(map.graph.toString());
+		Position pos = new Position(0,17);
+		System.out.println(map.graph.getNode(pos).getAdjacentNodes().toString());
+		int distance = map.calculateDistance(0, 18);
+		System.out.println(distance);
 	}
 }
