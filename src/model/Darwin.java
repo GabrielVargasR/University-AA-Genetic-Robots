@@ -149,7 +149,24 @@ public class Darwin implements IConstants{
 	
 	// Fourth phase
 	private void mutate() {
+		int bits = POPULATION_SIZE * GENE_SIZE * 8; // amount of bits in a generation
+		int modAmount = (int) (bits * MUTATION_PERCENTAGE);
 		
+		ArrayList<Robot> gen = this.generations.get(this.genCounter);
+		
+		int index; // which bit gets modified (number relative to the whole matrix)
+		int bit; // which bit gets modified (number relative to the byte)
+		int byteIndex; // which byte in a robot's genes gets modified
+		int robot; // which robot gets modified
+		for (int i = 0; i < modAmount; i++) {
+			index = this.random.nextInt(bits);
+			bit = index % 8;
+			byteIndex = index / 8;
+			robot = byteIndex / POPULATION_SIZE;
+			byteIndex %= POPULATION_SIZE; 
+			
+			 gen.get(robot).mutate(bit, byteIndex);
+		}
 	}
 	
 	
@@ -157,7 +174,7 @@ public class Darwin implements IConstants{
 	public void run() {
 		
 		Robot[] selected;
-		// temporary condition. Can be changed to take into account generation variance or genneral fitness
+		// temporary condition. Can be changed to take into account generation variance or general fitness
 		while (this.genCounter < 50) {
 			this.genCounter++;
 			this.generations.put(this.genCounter, new ArrayList<Robot>());
@@ -178,7 +195,7 @@ public class Darwin implements IConstants{
 //			+ String.format("%8s", Integer.toBinaryString(r.getCamera() & 0xFF)).replace(' ', '0')+  String.format("%8s", Integer.toBinaryString(r.getMotor() & 0xFF)).replace(' ', '0'));
 //		}
 		
-	
+		/*
 		byte one = (byte) 150;
 		byte two = (byte) 25;
 		// prints one, then two
@@ -221,6 +238,31 @@ public class Darwin implements IConstants{
 		for (int i = 7; i >= 0; i--) {
 			System.out.print(three >> i & 1);
 		}
+		*/
 		
+		/*
+		Random random = new Random();
+		byte[] a = {(byte) 0b10101010, (byte) 0b11110000, (byte) 0b10001000};
+		byte[] b = {(byte) 0b11110000, (byte) 0b10001000, (byte) 0b10101010};
+		byte[] c = {(byte) 0b10001000, (byte) 0b10101010, (byte) 0b11110000};
+		
+		int bits = 3 * 3 * 8;
+		int modAmount = 2;
+		
+		int index; // which bit gets modified (number relative to the whole matrix)
+		int bit; // which bit gets modified (number relative to the byte)
+		int byteIndex; // which byte in a robot's genes gets modified
+		int robot; // which robot gets modified
+		for (int i = 0; i < modAmount; i++) {
+			index = random.nextInt(bits);
+			bit = index % 8;
+			byteIndex = index / 8;
+			robot = byteIndex / 3;
+			byteIndex %= 3;
+			
+			
+			System.out.println("Index: " + index + ", Bit: " + bit + ", byteIndex: " + byteIndex + ", Robot: " + robot);
+		}
+		*/
 	}
 }

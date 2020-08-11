@@ -107,6 +107,22 @@ public class Robot implements IConstants {
 	private void calculateCost() {
 		this.cost = (double) (this.motorType + this.cameraType + this.batteryType) / 3;
 	}
+	
+	public void mutate(int pBit, int pByteIndex) {
+		byte modByte = this.genes[pByteIndex];
+		byte newByte = 0b0;
+		
+		for(int i = 7; i >= 0; i--) {
+			newByte <<= 1;
+			if (i != pBit) {
+				newByte += modByte >> i & 1;
+			} else if ((modByte >> pBit & 1) == 0) {
+				newByte += 0b1;	
+			}
+		}
+		
+		this.genes[pByteIndex] = newByte;
+	}
 
 	// ---------------------------- Getters & Setters ----------------------------
 	public ArrayList<int[]> getPath() {
@@ -206,6 +222,5 @@ public class Robot implements IConstants {
 		System.out.println("Motor: " + String.format("%8s", Integer.toBinaryString(motor & 0xFF)).replace(' ', '0')
 				+ "(" + Byte.toUnsignedInt(motor) + ")" + " - tipo: " + mot);
 		System.out.println("Costo: " + costo);
-
 	}
 }
