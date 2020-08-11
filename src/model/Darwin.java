@@ -78,6 +78,7 @@ public class Darwin implements IConstants{
 			double probSum = 0;
 			while(probSum < randomProb){
 				probSum = probSum + generation.get(robotIndex).getFitness();
+				robotIndex++;
 			} 
 			selected[i] = generation.get(i);
 		}
@@ -159,6 +160,7 @@ public class Darwin implements IConstants{
 		Robot[] selected;
 		// temporary condition. Can be changed to take into account generation variance or general fitness
 		while (this.genCounter < 50) {
+			System.out.println(genCounter);
 			this.genCounter++;
 			this.generations.put(this.genCounter, new ArrayList<Robot>());
 			selected = this.naturalSelection();
