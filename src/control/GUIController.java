@@ -11,13 +11,14 @@ public class GUIController implements IConstants{
 
 	public GUIController() {
 		this.darwin = new Darwin();
+		this.darwin.run();
 	}
 	
 	public String [][] getGeneration(int pNum) {
 		ArrayList<Robot> gen = this.darwin.getGeneration(pNum);
 		
 		if (gen == null) {
-			return new String[][] {{}};
+			return new String[][] {};
 		}
 		
 		String [][] robots = new String[POPULATION_SIZE][];
