@@ -163,12 +163,13 @@ public class Darwin implements IConstants{
 			System.out.println("Gen("+genCounter+")Size: "+generations.get(genCounter).size());
 			selected = this.naturalSelection();
 			System.out.println("Selected size: " + selected.length);
+			this.genCounter++;
+			this.generations.put(this.genCounter, new ArrayList<Robot>());
 			for (int i = 0; i < POPULATION_SIZE; i+=2) {
 				this.cross(selected[i], selected[i+1], i);
 			}
 			//this.mutate();
-			this.genCounter++;
-			this.generations.put(this.genCounter, new ArrayList<Robot>());
+
 		}	
 	}
 	
