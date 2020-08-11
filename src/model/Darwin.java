@@ -70,14 +70,14 @@ public class Darwin implements IConstants{
 		}
 		for (Robot robot : generation) {
 			double normalizeFitness = robot.getFitness() / fitnessSum;
-			robot.setFitness(normalizeFitness);
+			robot.setProbability(normalizeFitness);
 		}
 		for (int i = 0; i < POPULATION_SIZE; i++) {
 			double randomProb = this.random.nextDouble();
 			int robotIndex = 0;
 			double probSum = 0;
 			while(probSum < randomProb){
-				probSum = probSum + generation.get(robotIndex).getFitness();
+				probSum = probSum + generation.get(robotIndex).getProbability();
 				robotIndex++;
 			} 
 			selected[i] = generation.get(i);

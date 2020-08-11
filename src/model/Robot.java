@@ -18,6 +18,7 @@ public class Robot implements IConstants {
 	private int batteryLevel;
 
 	private double fitness;
+	private double probability;
 
 	private Robot parentA;
 	private Robot parentB;
@@ -198,6 +199,14 @@ public class Robot implements IConstants {
 
 	public void setFitness(double pFitness) {
 		this.fitness = pFitness;
+	}
+
+	public double getProbability() {
+		return probability;
+	}
+
+	public void setProbability(double probability) {
+		this.probability = probability;
 	}
 
 	public static void main(String[] args) {
