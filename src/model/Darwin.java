@@ -49,7 +49,7 @@ public class Darwin implements IConstants{
 		double time = pRobot.getTime();
 		double cost = pRobot.getCost();
 		
-		double cDist = (4.0 * (MIN_DISTANCE - distance))/20.0;
+		double cDist = (4.0 * (MIN_DISTANCE - distance))/MIN_DISTANCE;
 		double cTime = (MIN_DISTANCE - distance) / time;
 		double cCost = 1.0/cost;
 		
@@ -81,7 +81,7 @@ public class Darwin implements IConstants{
 				probSum = probSum + generation.get(robotIndex).getProbability();
 				robotIndex++;
 			} 
-			selected[i] = generation.get(i);
+			selected[i] = generation.get(--robotIndex);
 		}
 		return selected;
 	}
@@ -125,7 +125,7 @@ public class Darwin implements IConstants{
 		}
 		
 		Robot new1 = new Robot(gene1, pRobot1, pRobot2, this.genCounter, pRobNum);
-		Robot new2 = new Robot(gene2, pRobot1, pRobot2, this.genCounter, pRobNum+1);
+		Robot new2 = new Robot(gene2, pRobot1, pRobot2, this.genCounter, ++pRobNum);
 		
 		ArrayList<Robot> gen = this.generations.get(this.genCounter);
 		gen.add(new1);
