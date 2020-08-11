@@ -26,14 +26,30 @@ public class Map implements IConstants{
 		return this.layout;
 	}
 	
-	public int calculateDistance(int pRow, int pCol) {
+	// public int calculateDistance(int pRow, int pCol) {
+	// 	int distance = distances[pRow][pCol];
+	// 	if(distance == -1){
+	// 		Position pos = new Position(pRow,pCol);
+	// 		distance = pathGetter.getPath(graph, pos, new Position(MAP_END[0], MAP_END[1])).size();
+	// 		distances[pRow][pCol] = distance;
+	// 	}
+	// 	return distance;
+	// }
+
+	public int calculateDistance(int pRow, int pCol){
 		int distance = distances[pRow][pCol];
 		if(distance == -1){
-			Position pos = new Position(pRow,pCol);
-			distance = pathGetter.getPath(graph, pos, new Position(MAP_END[0], MAP_END[1])).size();
+			int[] pos = new int[2];
+			pos[0] = pRow;
+			pos[1] = pCol;
+			distance = ManhattanDistance(pos, MAP_END);
 			distances[pRow][pCol] = distance;
 		}
 		return distance;
+	}
+
+	private int ManhattanDistance(int[] pStart, int[] pEnd){
+		 return Math.abs(pStart[0] - pEnd[0]) + Math.abs(pStart[1] - pEnd[1]);
 	}
 
 	public int getMaxDistance() {
