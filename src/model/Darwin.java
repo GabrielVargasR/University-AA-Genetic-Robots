@@ -35,7 +35,7 @@ public class Darwin implements IConstants{
 	// First phase
 	private void populateFirstGen() {
 		ArrayList<Robot> gen = new ArrayList<Robot>();
-		this.genCounter = 1;
+		this.genCounter = 0;
 		
 		for (int i = 0; i < POPULATION_SIZE; i++) {
 			gen.add(new Robot(genCounter, i));
@@ -58,7 +58,7 @@ public class Darwin implements IConstants{
 	
 	// Second phase
 	private Robot[] naturalSelection() {
-		ArrayList<Robot> generation = this.generations.get(--this.genCounter);
+		ArrayList<Robot> generation = this.generations.get(this.genCounter);
 		Robot[] selected = new Robot[POPULATION_SIZE];
 		double currFit;
 		double fitnessSum = 0.0;
@@ -160,15 +160,16 @@ public class Darwin implements IConstants{
 		Robot[] selected;
 		// temporary condition. Can be changed to take into account generation variance or general fitness
 		while (this.genCounter < 50) {
-			System.out.println(genCounter);
-			this.genCounter++;
-			this.generations.put(this.genCounter, new ArrayList<Robot>());
+			System.out.println("Gen("+genCounter+")Size: "+generations.get(genCounter).size());
 			selected = this.naturalSelection();
+			System.out.println("Selected size: " + selected.length);
 			for (int i = 0; i < POPULATION_SIZE; i+=2) {
-				this.cross(selected[i], selected[++i], i);
+				this.cross(selected[i], selected[i+1], i);
 			}
 			//this.mutate();
-		}
+			this.genCounter++;
+			this.generations.put(this.genCounter, new ArrayList<Robot>());
+		}	
 	}
 	
 	public static void main(String[] args) {
