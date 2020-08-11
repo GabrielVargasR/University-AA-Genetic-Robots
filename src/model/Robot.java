@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Robot implements IConstants {
@@ -20,6 +21,8 @@ public class Robot implements IConstants {
 
 	private Robot parentA;
 	private Robot parentB;
+
+	private ArrayList<int[]> path;
 
 	//* FIRST GEN
 	public Robot(int pGen, int pNum) {
@@ -42,6 +45,10 @@ public class Robot implements IConstants {
 		this.batteryType = this.calculateType(genes[GENE_BATTERY_INDEX]);
 		this.batteryLevel = getBatteryMaxLevel(batteryType); 
 		this.calculateCost();
+		this.path = new ArrayList<int[]>();
+	}
+	public void addToPath(int[] pos){
+		path.add(pos);
 	}
 
 	public boolean canTraverse(int pTerrainType) {
@@ -102,6 +109,9 @@ public class Robot implements IConstants {
 	}
 
 	// ---------------------------- Getters & Setters ----------------------------
+	public ArrayList<int[]> getPath() {
+		return path;
+	}
 	public int getBatteryLevel() {
 		return batteryLevel;
 	}
