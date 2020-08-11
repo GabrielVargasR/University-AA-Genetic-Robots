@@ -35,7 +35,7 @@ public class Darwin implements IConstants{
 	// First phase
 	private void populateFirstGen() {
 		ArrayList<Robot> gen = new ArrayList<Robot>();
-		this.genCounter = 1;
+		this.genCounter = 0;
 		
 		for (int i = 0; i < POPULATION_SIZE; i++) {
 			gen.add(new Robot(genCounter, i));
@@ -58,38 +58,31 @@ public class Darwin implements IConstants{
 	
 	// Second phase
 	private Robot[] naturalSelection() {
-		ArrayList<Robot> generation = this.generations.get(--this.genCounter);
+		ArrayList<Robot> generation = this.generations.get(this.genCounter);
 		Robot[] selected = new Robot[POPULATION_SIZE];
-		
 		double currFit;
 		double fitnessSum = 0.0;
 		for (Robot robot : generation) {
 			walker.walk(robot);
 			currFit = this.evaluateFitness(robot);
+			System.out.println(currFit);
 			robot.setFitness(currFit);
 			fitnessSum += currFit;
 		}
-		
-		double currProb;
-		ArrayList<Robot> picker = new ArrayList<Robot>();
 		for (Robot robot : generation) {
-			currProb = robot.getFitness() / fitnessSum;
-			currProb *= 100;
-			currProb = Math.floor(currProb);
-			
-			for (int i = 0; i < currProb; i++) {
-				picker.add(robot);
-			}
+			double normalizeFitness = robot.getFitness() / fitnessSum;
+			robot.setProbability(normalizeFitness);
 		}
-		
-		int index;
-		int selSize = picker.size();
-		Collections.shuffle(picker);
 		for (int i = 0; i < POPULATION_SIZE; i++) {
-			index = this.random.nextInt(selSize);
-			selected[i] = picker.get(index);
+			double randomProb = this.random.nextDouble();
+			int robotIndex = 0;
+			double probSum = 0;
+			while(probSum < randomProb){
+				probSum = probSum + generation.get(robotIndex).getProbability();
+				robotIndex++;
+			} 
+			selected[i] = generation.get(i);
 		}
-		
 		return selected;
 	}
 	
@@ -132,7 +125,7 @@ public class Darwin implements IConstants{
 		}
 		
 		Robot new1 = new Robot(gene1, pRobot1, pRobot2, this.genCounter, pRobNum);
-		Robot new2 = new Robot(gene2, pRobot1, pRobot2, this.genCounter, ++pRobNum);
+		Robot new2 = new Robot(gene2, pRobot1, pRobot2, this.genCounter, pRobNum+1);
 		
 		ArrayList<Robot> gen = this.generations.get(this.genCounter);
 		gen.add(new1);
@@ -146,18 +139,26 @@ public class Darwin implements IConstants{
 		
 		ArrayList<Robot> gen = this.generations.get(this.genCounter);
 		
-		int index; // which bit gets modified (number relative to the whole matrix)
-		int bit; // which bit gets modified (number relative to the byte)
-		int byteIndex; // which byte in a robot's genes gets modified
-		int robot; // which robot gets modified
+		int bitIndex; // which bit gets modified (number relative to the whole matrix)
+		int bitPos; // which bit gets modified (number relative to the byte)
+		int byteIndex; // which byte gets modified (number relative to the whole matrix)
+		int bytePos; // which byte in a robot's genes gets modified
+		int robotIndex; // which robot gets modified
 		for (int i = 0; i < modAmount; i++) {
-			index = this.random.nextInt(bits);
-			bit = index % 8;
-			byteIndex = index / 8;
-			robot = byteIndex / POPULATION_SIZE;
-			byteIndex %= POPULATION_SIZE; 
-			
-			 gen.get(robot).mutate(bit, byteIndex);
+			bitIndex = this.random.nextInt(bits);
+			bitPos = bitIndex % 8;
+			byteIndex = bitIndex / 8;
+			robotIndex = byteIndex / GENE_SIZE;
+			bytePos = byteIndex % GENE_SIZE; 
+
+			// System.out.println("Total bits: " + bits);
+			// System.out.println("Bit Index: " + bitIndex);
+			// System.out.println("Bit Pos: " + bitPos);
+			// System.out.println("Byte Index: " + byteIndex);
+			// System.out.println("Byte Pos: " + bytePos);
+			// System.out.println("RobotIndex: " + robotIndex);
+
+			 gen.get(robotIndex).mutate(bitPos, bytePos);
 		}
 	}
 	
@@ -168,18 +169,21 @@ public class Darwin implements IConstants{
 		Robot[] selected;
 		// temporary condition. Can be changed to take into account generation variance or general fitness
 		while (this.genCounter < 50) {
+			//System.out.println("Gen("+genCounter+")Size: "+generations.get(genCounter).size());
+			selected = this.naturalSelection();
+			//System.out.println("Selected size: " + selected.length);
 			this.genCounter++;
 			this.generations.put(this.genCounter, new ArrayList<Robot>());
-			selected = this.naturalSelection();
 			for (int i = 0; i < POPULATION_SIZE; i+=2) {
-				this.cross(selected[i], selected[++i], i);
+				this.cross(selected[i], selected[i+1], i);
 			}
 			this.mutate();
-		}
+		}	
 	}
 	
 	public static void main(String[] args) {
 		Darwin d = new Darwin();
+		d.run();
 //		ArrayList<Robot> gen =  d.getGeneration(1);
 //		
 //		for (Robot r : gen) {
