@@ -11,6 +11,7 @@ public class GUIController implements IConstants{
 
 	public GUIController() {
 		this.darwin = new Darwin();
+		this.darwin.run();
 	}
 	
 	public String [][] getGeneration(int pNum) {
