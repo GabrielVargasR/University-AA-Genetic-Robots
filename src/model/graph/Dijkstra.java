@@ -110,4 +110,29 @@ public class Dijkstra <T> implements IGraphPathGettable<T> {
 	public ArrayList<GraphNode<T>> getPath(Graph<T> pGraph, T pStartContent, T pEndContent) {
 		return calculateDijkstra(pGraph, pStartContent, pEndContent);
 	}
+	public static void main(String[] args) {
+		Graph g = new Graph<Integer>();
+		g.addNode(1);
+		g.addNode(2);
+		g.addNode(3);
+		g.addNode(4);
+		g.addNode(5);
+		g.addEdge(5, 4, 1);
+		g.addEdge(4, 1, 1);
+		g.addEdge(1, 2, 1);
+		//g.addEdge(1, 1, 1);
+		g.addEdge(2, 3, 1);
+		
+		IGraphPathGettable get = new Dijkstra<Integer>();
+		int distance = get.getPath(g, 1, 1).size();
+		System.out.println(distance);
+		distance = get.getPath(g, 1, 3).size();
+		System.out.println(distance);
+		distance = get.getPath(g, 1, 2).size();
+		System.out.println(distance);
+		distance = get.getPath(g, 1, 4).size();
+		System.out.println(distance);
+
+		System.out.println(g.getEdges().toString());
+	}
 }

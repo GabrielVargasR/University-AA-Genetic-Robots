@@ -146,8 +146,10 @@ public class Map implements IConstants{
 		public static void main(String[] args) {
 		Map map = new Map();
 		Position pos = new Position(0,17);
+		Position pos2 = new Position(0,18);
 		System.out.println(map.graph.getNode(pos).getAdjacentNodes().toString());
-		int distance = map.calculateDistance(0, 18);
+		System.out.println(map.graph.getNode(pos2).getAdjacentNodes().toString());
+		int distance = map.calculateDistance(0, 0);
 		System.out.println(distance);
 	}
 }
