@@ -84,6 +84,7 @@ public class Darwin implements IConstants{
 		
 		int index;
 		int selSize = picker.size();
+		System.out.println("selSize: "+selSize);
 		Collections.shuffle(picker);
 		for (int i = 0; i < POPULATION_SIZE; i++) {
 			index = this.random.nextInt(selSize);

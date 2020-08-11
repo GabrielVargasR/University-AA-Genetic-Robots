@@ -37,24 +37,24 @@ public class Walker implements IConstants {
                     currentMapPos = nextPos;
                     chain.setCurrentState(adjacentStates[chosenDir]);
                 }
-                System.out.println("CONTINUE");
-                System.out.println("Battery Level: " + robot.getBatteryLevel());
-                System.out.println("--------------------------");
+                // System.out.println("CONTINUE");
+                // System.out.println("Battery Level: " + robot.getBatteryLevel());
+                // System.out.println("--------------------------");
                 continue;
             }
-            System.out.println("BREAK");
-            System.out.println("Can traverse: " + robot.canTraverse(currentTerrain));
-            System.out.println("Battery Level: " + robot.getBatteryLevel());
-            System.out.println("--------------------------");
+                // System.out.println("BREAK");
+                // System.out.println("Can traverse: " + robot.canTraverse(currentTerrain));
+                // System.out.println("Battery Level: " + robot.getBatteryLevel());
+                // System.out.println("--------------------------");
 
             break;
         }
-        System.out.println("FINISH");
-        System.out.println("Current map position: " + currentMapPos[0] + "," + currentMapPos[1]);
-        System.out.println("Battery Level: " + robot.getBatteryLevel());
-        System.out.println("Time: " + robot.getTime());
-        System.out.println("Distance: " + robot.getDistance());
-        System.out.println("--------------------------");
+        // System.out.println("FINISH");
+        // System.out.println("Current map position: " + currentMapPos[0] + "," + currentMapPos[1]);
+        // System.out.println("Battery Level: " + robot.getBatteryLevel());
+        // System.out.println("Time: " + robot.getTime());
+        // System.out.println("Distance: " + robot.getDistance());
+        // System.out.println("--------------------------");
     }
 
     private int[] getAdjacentStates() {
