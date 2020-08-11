@@ -65,6 +65,7 @@ public class Darwin implements IConstants{
 		for (Robot robot : generation) {
 			walker.walk(robot);
 			currFit = this.evaluateFitness(robot);
+			System.out.println(currFit);
 			robot.setFitness(currFit);
 			fitnessSum += currFit;
 		}
@@ -156,7 +157,7 @@ public class Darwin implements IConstants{
 			// System.out.println("Byte Index: " + byteIndex);
 			// System.out.println("Byte Pos: " + bytePos);
 			// System.out.println("RobotIndex: " + robotIndex);
-			
+
 			 gen.get(robotIndex).mutate(bitPos, bytePos);
 		}
 	}

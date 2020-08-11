@@ -62,6 +62,8 @@ public class Dijkstra <T> implements IGraphPathGettable<T> {
 		int currentMin = Integer.MAX_VALUE;
 		GraphNode<T> currentMinNode = pNode;
 		for(GraphNode<T> adjacentNode : pNode.getAdjacentNodes()) {
+			//! NO SIRVE PARA MISMOS PESOS
+			//TODO se debe poner una lista con los nodos de peso minimo iguales y llamar recursivamente a djsktraStep?
 			if(this.visited.contains(adjacentNode)) {
 				continue;
 			}
