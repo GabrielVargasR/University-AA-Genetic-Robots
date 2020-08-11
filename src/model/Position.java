@@ -22,6 +22,12 @@ class Position {
         return y + (x * IConstants.MAP_SIZE);
     }
 
+    @Override
+    public String toString() {
+        String ret = "X: "+ x + " Y: "+y;
+        return ret;
+    }
+
     public int getX() {
         return x;
     }
