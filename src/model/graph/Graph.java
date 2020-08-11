@@ -36,6 +36,11 @@ public class Graph<T> {
 			node.resetVisit();
 		}
 	}
+	public void clearLasts() {
+		for (GraphNode<T> node : this.nodes) {
+			node.setLast(null);
+		}
+	}
 	
 	public void clear() {
 		this.nodes.clear();

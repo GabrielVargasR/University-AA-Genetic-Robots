@@ -1,7 +1,11 @@
 package model;
 
+import java.util.ArrayList;
+
+import model.graph.BFS;
 import model.graph.Dijkstra;
 import model.graph.Graph;
+import model.graph.GraphNode;
 import model.graph.IGraphPathGettable;
 
 public class Map implements IConstants{
@@ -26,23 +30,20 @@ public class Map implements IConstants{
 		return this.layout;
 	}
 	
-	// public int calculateDistance(int pRow, int pCol) {
-	// 	int distance = distances[pRow][pCol];
-	// 	if(distance == -1){
-	// 		Position pos = new Position(pRow,pCol);
-	// 		distance = pathGetter.getPath(graph, pos, new Position(MAP_END[0], MAP_END[1])).size();
-	// 		distances[pRow][pCol] = distance;
-	// 	}
-	// 	return distance;
-	// }
-
-	public int calculateDistance(int pRow, int pCol){
+	public int calculateDistance(int pRow, int pCol) {
 		int distance = distances[pRow][pCol];
 		if(distance == -1){
-			int[] pos = new int[2];
-			pos[0] = pRow;
-			pos[1] = pCol;
-			distance = ManhattanDistance(pos, MAP_END);
+			Position pos = new Position(pRow,pCol);
+			ArrayList<GraphNode<Position>> path = pathGetter.getPath(graph, pos, new Position(MAP_END[0], MAP_END[1]));
+			if(path == null){
+				int[] posArray = new int[2];
+				posArray[0] = pos.getX();
+				posArray[1] = pos.getY();
+				distance = ManhattanDistance(posArray, MAP_END);
+			}
+			else{
+				distance = path.size();
+			}
 			distances[pRow][pCol] = distance;
 		}
 		return distance;
@@ -139,7 +140,7 @@ public class Map implements IConstants{
 	
 	private void initGraph() {
 		graph = new Graph<Position>();
-		pathGetter = new Dijkstra<Position>();
+		pathGetter = new BFS<Position>();
 		Position leftPos;
 		Position upPos = null;
 		int weight = 0;
@@ -147,15 +148,19 @@ public class Map implements IConstants{
 			leftPos = null;
 			for (int col = 0; col < MAP_SIZE; col++) {
 				Position pos = new Position(row,col);
-				weight = 0;
-				upPos = getAdjacentPosition(pos, UP_DIRECTION);
 				graph.addNode(pos);
-				if(getTerrainByPos(pos) == BLOCKED_TERRAIN){
-					weight = 100;
+				upPos = getAdjacentPosition(pos, UP_DIRECTION);
+				if(getTerrainByPos(upPos) == BLOCKED_TERRAIN){
+					upPos = null;
 				}
-				graph.addEdge(pos, leftPos, weight);
-				graph.addEdge(pos, upPos, weight);
-				leftPos = pos;
+				if(getTerrainByPos(pos) != BLOCKED_TERRAIN){
+					graph.addEdge(pos, leftPos, weight);
+					graph.addEdge(pos, upPos, weight);
+					leftPos = pos;
+				}
+				else{
+					leftPos = null;
+				}
 			}
 		}
 	}
@@ -165,7 +170,7 @@ public class Map implements IConstants{
 		Position pos2 = new Position(0,18);
 		System.out.println(map.graph.getNode(pos).getAdjacentNodes().toString());
 		System.out.println(map.graph.getNode(pos2).getAdjacentNodes().toString());
-		int distance = map.calculateDistance(0, 0);
+		int distance = map.calculateDistance(2, 17);
 		System.out.println(distance);
 	}
 }
