@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Robot implements IConstants {
@@ -21,6 +22,8 @@ public class Robot implements IConstants {
 	private Robot parentA;
 	private Robot parentB;
 
+	private ArrayList<int[]> path;
+
 	//* FIRST GEN
 	public Robot(int pGen, int pNum) {
 		byte[] randomGenes = generateRandomGenes();
@@ -32,13 +35,20 @@ public class Robot implements IConstants {
 	}
 
 	private void initializeRobot(byte[] pGenes, Robot pParA, Robot pParB, int pGen, int pNum){
+		this.id = "g" + pGen + "-n" + pNum;
+		this.genes = pGenes;
 		this.parentA = pParA;
 		this.parentB = pParB;
+		this.genes = pGenes;
 		this.motorType = this.calculateType(genes[GENE_MOTOR_INDEX]);
 		this.cameraType = this.calculateType(genes[GENE_CAMERA_INDEX]);
 		this.batteryType = this.calculateType(genes[GENE_BATTERY_INDEX]);
 		this.batteryLevel = getBatteryMaxLevel(batteryType); 
 		this.calculateCost();
+		this.path = new ArrayList<int[]>();
+	}
+	public void addToPath(int[] pos){
+		path.add(pos);
 	}
 
 	public boolean canTraverse(int pTerrainType) {
@@ -78,7 +88,7 @@ public class Robot implements IConstants {
 		Random rand = new Random();
 		byte[] genesArray = new byte[GENE_SIZE];
 		for (int byteNumber = 0; byteNumber < GENE_SIZE; byteNumber++) {
-			genes[byteNumber] = (byte) rand.nextInt(256);
+			genesArray[byteNumber] = (byte) rand.nextInt(256);
 		}
 		return genesArray;
 	}
@@ -99,6 +109,9 @@ public class Robot implements IConstants {
 	}
 
 	// ---------------------------- Getters & Setters ----------------------------
+	public ArrayList<int[]> getPath() {
+		return path;
+	}
 	public int getBatteryLevel() {
 		return batteryLevel;
 	}
