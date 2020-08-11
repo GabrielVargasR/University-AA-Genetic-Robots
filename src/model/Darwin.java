@@ -125,7 +125,7 @@ public class Darwin implements IConstants{
 		}
 		
 		Robot new1 = new Robot(gene1, pRobot1, pRobot2, this.genCounter, pRobNum);
-		Robot new2 = new Robot(gene2, pRobot1, pRobot2, this.genCounter, ++pRobNum);
+		Robot new2 = new Robot(gene2, pRobot1, pRobot2, this.genCounter, pRobNum++);
 		
 		ArrayList<Robot> gen = this.generations.get(this.genCounter);
 		gen.add(new1);
