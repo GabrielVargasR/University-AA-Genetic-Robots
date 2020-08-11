@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
@@ -25,6 +26,7 @@ public class Walker implements IConstants {
         chain.assignGraphWeight(robot.getGenes(),GENE_EDGES_INDEX);
         resetMapPosition();
         while (robot.getBatteryLevel() > 0 && !arrived()) {
+            robot.addToPath(currentMapPos);
             int currentTerrain = map.getTerrain(currentMapPos);
             if (robot.canTraverse(currentTerrain) && robot.hasEnoughBattery(currentTerrain)) {
                 robot.increaseTime();
