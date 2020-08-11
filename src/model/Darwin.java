@@ -138,18 +138,26 @@ public class Darwin implements IConstants{
 		
 		ArrayList<Robot> gen = this.generations.get(this.genCounter);
 		
-		int index; // which bit gets modified (number relative to the whole matrix)
-		int bit; // which bit gets modified (number relative to the byte)
-		int byteIndex; // which byte in a robot's genes gets modified
-		int robot; // which robot gets modified
+		int bitIndex; // which bit gets modified (number relative to the whole matrix)
+		int bitPos; // which bit gets modified (number relative to the byte)
+		int byteIndex; // which byte gets modified (number relative to the whole matrix)
+		int bytePos; // which byte in a robot's genes gets modified
+		int robotIndex; // which robot gets modified
 		for (int i = 0; i < modAmount; i++) {
-			index = this.random.nextInt(bits);
-			bit = index % 8;
-			byteIndex = index / 8;
-			robot = byteIndex / POPULATION_SIZE;
-			byteIndex %= POPULATION_SIZE; 
+			bitIndex = this.random.nextInt(bits);
+			bitPos = bitIndex % 8;
+			byteIndex = bitIndex / 8;
+			robotIndex = byteIndex / GENE_SIZE;
+			bytePos = byteIndex % GENE_SIZE; 
+
+			// System.out.println("Total bits: " + bits);
+			// System.out.println("Bit Index: " + bitIndex);
+			// System.out.println("Bit Pos: " + bitPos);
+			// System.out.println("Byte Index: " + byteIndex);
+			// System.out.println("Byte Pos: " + bytePos);
+			// System.out.println("RobotIndex: " + robotIndex);
 			
-			 gen.get(robot).mutate(bit, byteIndex);
+			 gen.get(robotIndex).mutate(bitPos, bytePos);
 		}
 	}
 	
@@ -160,16 +168,15 @@ public class Darwin implements IConstants{
 		Robot[] selected;
 		// temporary condition. Can be changed to take into account generation variance or general fitness
 		while (this.genCounter < 50) {
-			System.out.println("Gen("+genCounter+")Size: "+generations.get(genCounter).size());
+			//System.out.println("Gen("+genCounter+")Size: "+generations.get(genCounter).size());
 			selected = this.naturalSelection();
-			System.out.println("Selected size: " + selected.length);
+			//System.out.println("Selected size: " + selected.length);
 			this.genCounter++;
 			this.generations.put(this.genCounter, new ArrayList<Robot>());
 			for (int i = 0; i < POPULATION_SIZE; i+=2) {
 				this.cross(selected[i], selected[i+1], i);
 			}
-			//this.mutate();
-
+			this.mutate();
 		}	
 	}
 	
