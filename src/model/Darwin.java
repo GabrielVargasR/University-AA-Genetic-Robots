@@ -60,7 +60,6 @@ public class Darwin implements IConstants{
 	private Robot[] naturalSelection() {
 		ArrayList<Robot> generation = this.generations.get(--this.genCounter);
 		Robot[] selected = new Robot[POPULATION_SIZE];
-		
 		double currFit;
 		double fitnessSum = 0.0;
 		for (Robot robot : generation) {
@@ -69,28 +68,19 @@ public class Darwin implements IConstants{
 			robot.setFitness(currFit);
 			fitnessSum += currFit;
 		}
-		
-		double currProb;
-		ArrayList<Robot> picker = new ArrayList<Robot>();
 		for (Robot robot : generation) {
-			currProb = robot.getFitness() / fitnessSum;
-			currProb *= 100;
-			currProb = Math.floor(currProb);
-			
-			for (int i = 0; i < currProb; i++) {
-				picker.add(robot);
-			}
+			double normalizeFitness = robot.getFitness() / fitnessSum;
+			robot.setFitness(normalizeFitness);
 		}
-		
-		int index;
-		int selSize = picker.size();
-		System.out.println("selSize: "+selSize);
-		Collections.shuffle(picker);
 		for (int i = 0; i < POPULATION_SIZE; i++) {
-			index = this.random.nextInt(selSize);
-			selected[i] = picker.get(index);
+			double randomProb = this.random.nextDouble();
+			int robotIndex = 0;
+			double probSum = 0;
+			while(probSum < randomProb){
+				probSum = probSum + generation.get(robotIndex).getFitness();
+			} 
+			selected[i] = generation.get(i);
 		}
-		
 		return selected;
 	}
 	
@@ -175,12 +165,13 @@ public class Darwin implements IConstants{
 			for (int i = 0; i < POPULATION_SIZE; i+=2) {
 				this.cross(selected[i], selected[++i], i);
 			}
-			this.mutate();
+			//this.mutate();
 		}
 	}
 	
 	public static void main(String[] args) {
 		Darwin d = new Darwin();
+		d.run();
 //		ArrayList<Robot> gen =  d.getGeneration(1);
 //		
 //		for (Robot r : gen) {
