@@ -198,48 +198,4 @@ public class Graph<T> {
 		return this.nodes.size();
 	}
 
-
-
-	public static void main(String[] args) {
-		Graph<String> g = new Graph<String>();
-		Dijkstra<String> d = new Dijkstra<String>();
-		Kruskal<String> k = new Kruskal<String>();
-		Warshall<String> w = new Warshall<String>();
-		
-		g.addNode("A");
-		g.addNode("B");
-		g.addNode("C");
-		g.addNode("D");
-		g.addNode("E");
-		g.addNode("F");
-		g.addNode("F");
-		g.addNode("Z");
-		
-		g.addEdge("A", "C", 5);
-		g.addEdge("A", "D", 7);
-		g.addEdge("C", "E", 9);
-		g.addEdge("B", "C", 1);
-		g.addEdge("B", "E", 3);
-		g.addEdge("E", "A", 14);
-		g.addEdge("E", "F", 8);
-		
-		System.out.println("Graph: ");
-		g.print();
-		
-		System.out.println("\nEdges:" + g.getEdges().toString() + "\n");
-
-		g.removeEdges(g.getNode("A"));
-        g.print();
-
-        System.out.println("\nEdges:" + g.getEdges().toString() + "\n");
-		
-		System.out.println("Dijkstra path: " + d.getPath(g, "D", "F") + "\n");
-		System.out.println("Kruskal path: " + k.getPath(g, "D", "F") + "\n");
-		System.out.println("Warshall path: " + w.getPath(g,"D", "F"));
-		ArrayList<String> primaryCon = new ArrayList<>();
-		primaryCon.add("C");
-		primaryCon.add("B");
-		primaryCon.add("A");
-
-	}
 }
