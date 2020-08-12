@@ -163,13 +163,21 @@ public class Darwin implements IConstants{
 		}
 	}
 	
+	private double averageFitness() {
+		double sum = 0;
+		for (Robot r : this.generations.get(this.genCounter)) {
+			sum += r.getFitness();
+		}
+		return sum / (double) POPULATION_SIZE;
+	}
+	
 	
 	// Fifth phase will go inside this method
 	public void run() {
 		
 		Robot[] selected;
 		// temporary condition. Can be changed to take into account generation variance or general fitness
-		while (this.genCounter < 50) {
+		while (this.averageFitness() < 0.9 & this.genCounter < 5000) {
 			//System.out.println("Gen("+genCounter+")Size: "+generations.get(genCounter).size());
 			selected = this.naturalSelection();
 			//System.out.println("Selected size: " + selected.length);

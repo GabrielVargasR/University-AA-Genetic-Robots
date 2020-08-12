@@ -1,7 +1,7 @@
 package model;
 
 public interface IConstants {
-	public static final int POPULATION_SIZE = 20;
+	public static final int POPULATION_SIZE = 26;
 
 	//MOTOR + CAMERA + BATTERY + STATES x STATES
 	public static final int GENE_SIZE = 292;
