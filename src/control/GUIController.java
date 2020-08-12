@@ -31,7 +31,7 @@ public class GUIController implements IConstants{
 			
 			// {"ID", "Fitness", "Battery", "Camera", "Motor", "Chromosomes", "ParentA", "ParentB"};
 			robots[i] = new String[] {rob.getId(), Double.toString(rob.getFitness()), ""+rob.getBatteryType(), ""+rob.getCameraType(), ""+rob.getMotorType(), 
-					String.format("%8s", Integer.toBinaryString(rob.getBattery() & 0xFF)).replace(' ', '0'), parA, parB
+					parA, parB
 			};
 		}
 		
@@ -43,20 +43,29 @@ public class GUIController implements IConstants{
 		Robot rob = darwin.getIndividual(Integer.parseInt(idInfo[0]), Integer.parseInt(idInfo[1]));
 		String info = "ID: " + rob.getId();  
 		
-//		info += "\nGenes: " + String.format("%8s", Integer.toBinaryString(rob.getBattery() & 0xFF)).replace(' ', '0')
-//				+ String.format("%8s", Integer.toBinaryString(rob.getCamera() & 0xFF)).replace(' ', '0')+  String.format("%8s", Integer.toBinaryString(rob.getMotor() & 0xFF)).replace(' ', '0');
-		
-		info += "\nGenes: ";
-		
-		
 		info += "\n\nCost: " + rob.getCost();
 		info += "\nDistance: " + rob.getDistance();
 		info += "\nTime: " + rob.getTime();
 		
-		info += "\n\nPath: ";
+		info += "\n\nPath: \n";
 		
+		int lineCount = 0;
 		for (String move : rob.getPath()) {
 			info += move + ", ";
+			lineCount++;
+			if (lineCount == 22) {
+				lineCount = 0;
+				info += '\n';
+			}
+		}
+		
+		info += "\n\nGenes: \n";
+		
+		byte[] genes = rob.getGenes();
+		for (int i = 0; i < genes.length / 3; i+=3) {
+			info += String.format("%8s", Integer.toBinaryString(genes[i] & 0xFF)).replace(' ', '0');
+			info += String.format("%8s", Integer.toBinaryString(genes[i+1] & 0xFF)).replace(' ', '0');
+			info += String.format("%8s", Integer.toBinaryString(genes[i+2] & 0xFF)).replace(' ', '0') + "\n";
 		}
 		
 		this.display.displayRobotInfo(info);
