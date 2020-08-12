@@ -41,10 +41,15 @@ public class GUIController implements IConstants{
 	public void displayRobotInfo(String pId) {
 		String[] idInfo = pId.replace("g", "").replace("n", "").split("-");
 		Robot rob = darwin.getIndividual(Integer.parseInt(idInfo[0]), Integer.parseInt(idInfo[1]));
-		String info = rob.getId() + ": " +  String.format("%8s", Integer.toBinaryString(rob.getBattery() & 0xFF)).replace(' ', '0')
-				+ String.format("%8s", Integer.toBinaryString(rob.getCamera() & 0xFF)).replace(' ', '0')+  String.format("%8s", Integer.toBinaryString(rob.getMotor() & 0xFF)).replace(' ', '0');
+		String info = "ID: " + rob.getId();  
 		
-		info += "\nCost: " + rob.getCost();
+//		info += "\nGenes: " + String.format("%8s", Integer.toBinaryString(rob.getBattery() & 0xFF)).replace(' ', '0')
+//				+ String.format("%8s", Integer.toBinaryString(rob.getCamera() & 0xFF)).replace(' ', '0')+  String.format("%8s", Integer.toBinaryString(rob.getMotor() & 0xFF)).replace(' ', '0');
+		
+		info += "\nGenes: ";
+		
+		
+		info += "\n\nCost: " + rob.getCost();
 		info += "\nDistance: " + rob.getDistance();
 		info += "\nTime: " + rob.getTime();
 		
