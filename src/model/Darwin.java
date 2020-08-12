@@ -179,7 +179,8 @@ public class Darwin implements IConstants{
 				this.cross(selected[i], selected[i+1], i);
 			}
 			this.mutate();
-		}	
+		}
+		this.naturalSelection();
 	}
 	
 	public static void main(String[] args) {
