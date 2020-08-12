@@ -20,6 +20,9 @@ public class Walker implements IConstants {
         initialMapPos = MAP_START;
         currentMapPos = initialMapPos;
     }
+    public Map getMap() {
+        return map;
+    }
 
     public void walk(Robot pRobot) {
         robot = pRobot;
@@ -136,6 +139,8 @@ public class Walker implements IConstants {
     private boolean arrived() {
         return currentMapPos[0] == MAP_END[0] && currentMapPos[1] == MAP_END[1];
     }
+
+
 
     public static void main(String[] args) {
         Robot robot = new Robot(1,1);

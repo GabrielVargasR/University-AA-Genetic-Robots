@@ -18,7 +18,7 @@ public class Darwin implements IConstants{
 		this.populateFirstGen();
 		this.random = new Random();
 		this.walker = new Walker();
-		this.max_distance = (new Map()).getMaxDistance();
+		this.max_distance = (walker.getMap().getMaxDistance());
 	}
 	
 	public Robot getIndividual(int pGen, int pNum) {
