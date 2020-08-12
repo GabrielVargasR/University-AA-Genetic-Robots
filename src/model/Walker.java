@@ -26,12 +26,12 @@ public class Walker implements IConstants {
         chain.assignGraphWeight(robot.getGenes(),GENE_EDGES_INDEX);
         resetMapPosition();
         while (robot.getBatteryLevel() > 0 && !arrived()) {
-            robot.addToPath(currentMapPos);
             int currentTerrain = map.getTerrain(currentMapPos);
             if (robot.canTraverse(currentTerrain) && robot.hasEnoughBattery(currentTerrain)) {
                 robot.increaseTime();
                 int[] adjacentStates = getAdjacentStates();
                 int chosenDir = chain.getNextMove(adjacentStates);
+                addDirToRobotPath(robot, chosenDir);
                 int[] nextPos = map.getAdjacentPos(currentMapPos, chosenDir);
                 if (nextPos != null) {
                     currentMapPos = nextPos;
@@ -57,6 +57,27 @@ public class Walker implements IConstants {
         // System.out.println("Time: " + robot.getTime());
         // System.out.println("Distance: " + robot.getDistance());
         // System.out.println("--------------------------");
+    }
+
+    private void addDirToRobotPath(Robot pRobot,int pDirection){
+        String stringDir = "";
+        switch (pDirection) {
+			case UP_DIRECTION:
+				stringDir = "U";
+				break;
+			case DOWN_DIRECTION:
+                stringDir = "D";
+				break;
+			case LEFT_DIRECTION:
+                stringDir = "L";
+				break;
+			case RIGHT_DIRECTION:
+                stringDir = "R";
+				break;
+			default:
+                break;
+        }
+        pRobot.addToPath(stringDir);
     }
 
     private int[] getAdjacentStates() {

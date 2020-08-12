@@ -23,7 +23,7 @@ public class Robot implements IConstants {
 	private Robot parentA;
 	private Robot parentB;
 
-	private ArrayList<int[]> path;
+	private ArrayList<String> path;
 
 	//* FIRST GEN
 	public Robot(int pGen, int pNum) {
@@ -46,9 +46,9 @@ public class Robot implements IConstants {
 		this.batteryType = this.calculateType(genes[GENE_BATTERY_INDEX]);
 		this.batteryLevel = getBatteryMaxLevel(batteryType); 
 		this.calculateCost();
-		this.path = new ArrayList<int[]>();
+		this.path = new ArrayList<String>();
 	}
-	public void addToPath(int[] pos){
+	public void addToPath(String pos){
 		path.add(pos);
 	}
 
@@ -126,7 +126,7 @@ public class Robot implements IConstants {
 	}
 
 	// ---------------------------- Getters & Setters ----------------------------
-	public ArrayList<int[]> getPath() {
+	public ArrayList<String> getPath() {
 		return path;
 	}
 	public int getBatteryLevel() {

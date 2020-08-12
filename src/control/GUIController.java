@@ -55,8 +55,8 @@ public class GUIController implements IConstants{
 		
 		info += "\n\nPath: ";
 		
-		for (int[] move : rob.getPath()) {
-			// info += move + ", ";
+		for (String move : rob.getPath()) {
+			info += move + ", ";
 		}
 		
 		this.display.displayRobotInfo(info);
