@@ -48,6 +48,11 @@ public class GUIController implements IConstants{
 		info += "\nDistance: " + rob.getDistance();
 		info += "\nTime: " + rob.getTime();
 		
+		info += "\n\nPath: ";
+		
+		for (int[] move : rob.getPath()) {
+			// info += move + ", ";
+		}
 		
 		this.display.displayRobotInfo(info);
 	}
