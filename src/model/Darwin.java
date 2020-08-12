@@ -3,7 +3,6 @@ package model;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.ArrayList;
-import java.util.Collections;
 
 
 public class Darwin implements IConstants{
@@ -18,7 +17,7 @@ public class Darwin implements IConstants{
 		this.populateFirstGen();
 		this.random = new Random();
 		this.walker = new Walker();
-		this.max_distance = (walker.getMap().getMaxDistance());
+		this.max_distance = (new Map()).getMaxDistance() + 1;
 	}
 	
 	public Robot getIndividual(int pGen, int pNum) {
@@ -194,6 +193,8 @@ public class Darwin implements IConstants{
 	public static void main(String[] args) {
 		Darwin d = new Darwin();
 		d.run();
+		
+
 //		ArrayList<Robot> gen =  d.getGeneration(1);
 //		
 //		for (Robot r : gen) {
