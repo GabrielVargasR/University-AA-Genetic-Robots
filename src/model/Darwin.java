@@ -11,6 +11,7 @@ public class Darwin implements IConstants{
 	private Random random;
 	private Walker walker;
 	private int max_distance;
+	private double genFitnessSum;
 
 	public Darwin() {
 		this.generations = new HashMap<Integer, ArrayList<Robot>>();
@@ -18,6 +19,7 @@ public class Darwin implements IConstants{
 		this.random = new Random();
 		this.walker = new Walker();
 		this.max_distance = (new Map()).getMaxDistance() + 1;
+		this.genFitnessSum = 0.0;
 	}
 	
 	public Robot getIndividual(int pGen, int pNum) {
@@ -69,6 +71,7 @@ public class Darwin implements IConstants{
 			robot.setFitness(currFit);
 			fitnessSum += currFit;
 		}
+		genFitnessSum = fitnessSum; 
 		for (Robot robot : generation) {
 			double normalizeFitness = robot.getFitness() / fitnessSum;
 			robot.setProbability(normalizeFitness);
@@ -163,11 +166,11 @@ public class Darwin implements IConstants{
 	}
 	
 	private double averageFitness() {
-		double sum = 0;
-		for (Robot r : this.generations.get(this.genCounter)) {
-			sum += r.getFitness();
-		}
-		return sum / (double) POPULATION_SIZE;
+		// double sum = 0;
+		// for (Robot r : this.generations.get(this.genCounter)) {
+		// 	sum += r.getFitness();
+		// }
+		return genFitnessSum / (double) POPULATION_SIZE;
 	}
 	
 	
@@ -176,7 +179,7 @@ public class Darwin implements IConstants{
 		
 		Robot[] selected;
 		// temporary condition. Can be changed to take into account generation variance or general fitness
-		while (this.averageFitness() < 0.9 & this.genCounter < 5000) {
+		while (this.averageFitness() < 0.9){// & this.genCounter < 15000) {
 			//System.out.println("Gen("+genCounter+")Size: "+generations.get(genCounter).size());
 			selected = this.naturalSelection();
 			//System.out.println("Selected size: " + selected.length);
@@ -191,8 +194,13 @@ public class Darwin implements IConstants{
 	}
 	
 	public static void main(String[] args) {
-		Darwin d = new Darwin();
-		d.run();
+		System.out.println("Mapa1");
+		for (int i = 0; i < 10; i++) {
+			Darwin d = new Darwin();
+			d.run();
+			System.out.println(d.genCounter);
+		}
+
 		
 
 //		ArrayList<Robot> gen =  d.getGeneration(1);
