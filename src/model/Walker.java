@@ -49,6 +49,8 @@ public class Walker implements IConstants {
 
             break;
         }
+        int distance = map.calculateDistance(currentMapPos[0], currentMapPos[1]);
+        robot.setDistance(distance);
         // System.out.println("FINISH");
         // System.out.println("Current map position: " + currentMapPos[0] + "," + currentMapPos[1]);
         // System.out.println("Battery Level: " + robot.getBatteryLevel());
