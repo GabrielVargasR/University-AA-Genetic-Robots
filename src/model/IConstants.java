@@ -22,7 +22,7 @@ public interface IConstants {
 	public static final int WINDOW_WIDTH = 1000;
 	public static final int WINDOW_HEIGHT = 800;
 	
-	public static final String[] HEADER = {"ID", "Fitness", "Battery", "Camera", "Motor", "Chromosomes", "ParentA", "ParentB"};
+	public static final String[] HEADER = {"ID", "Fitness", "Battery", "Camera", "Motor", "ParentA", "ParentB"};
 	public static final int ROW_SIZE = HEADER.length;
 
 	public static final int UP_DIRECTION = 0;

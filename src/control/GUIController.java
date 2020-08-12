@@ -31,7 +31,7 @@ public class GUIController implements IConstants{
 			
 			// {"ID", "Fitness", "Battery", "Camera", "Motor", "Chromosomes", "ParentA", "ParentB"};
 			robots[i] = new String[] {rob.getId(), Double.toString(rob.getFitness()), ""+rob.getBatteryType(), ""+rob.getCameraType(), ""+rob.getMotorType(), 
-					String.format("%8s", Integer.toBinaryString(rob.getBattery() & 0xFF)).replace(' ', '0'), parA, parB
+					parA, parB
 			};
 		}
 		
