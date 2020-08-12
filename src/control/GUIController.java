@@ -44,6 +44,16 @@ public class GUIController implements IConstants{
 		String info = rob.getId() + ": " +  String.format("%8s", Integer.toBinaryString(rob.getBattery() & 0xFF)).replace(' ', '0')
 				+ String.format("%8s", Integer.toBinaryString(rob.getCamera() & 0xFF)).replace(' ', '0')+  String.format("%8s", Integer.toBinaryString(rob.getMotor() & 0xFF)).replace(' ', '0');
 		
+		info += "\nCost: " + rob.getCost();
+		info += "\nDistance: " + rob.getDistance();
+		info += "\nTime: " + rob.getTime();
+		
+		info += "\n\nPath: ";
+		
+		for (int[] move : rob.getPath()) {
+			// info += move + ", ";
+		}
+		
 		this.display.displayRobotInfo(info);
 	}
 	
