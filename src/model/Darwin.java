@@ -11,13 +11,14 @@ public class Darwin implements IConstants{
 	private int genCounter;
 	private Random random;
 	private Walker walker;
+	private int max_distance;
 
 	public Darwin() {
 		this.generations = new HashMap<Integer, ArrayList<Robot>>();
 		this.populateFirstGen();
 		this.random = new Random();
 		this.walker = new Walker();
-		
+		this.max_distance = (new Map()).getMaxDistance();
 	}
 	
 	public Robot getIndividual(int pGen, int pNum) {
@@ -49,8 +50,8 @@ public class Darwin implements IConstants{
 		double time = pRobot.getTime();
 		double cost = pRobot.getCost();
 		
-		double cDist = (4.0 * (MIN_DISTANCE - distance))/MIN_DISTANCE;
-		double cTime = (MIN_DISTANCE - distance) / time;
+		double cDist = (4.0 * (this.max_distance - distance))/this.max_distance;
+		double cTime = (this.max_distance - distance) / time;
 		double cCost = 1.0/cost;
 		
 		return (cDist + cTime + cCost) / 6.0;
@@ -65,7 +66,7 @@ public class Darwin implements IConstants{
 		for (Robot robot : generation) {
 			walker.walk(robot);
 			currFit = this.evaluateFitness(robot);
-			System.out.println(currFit);
+//			System.out.println(currFit);
 			robot.setFitness(currFit);
 			fitnessSum += currFit;
 		}

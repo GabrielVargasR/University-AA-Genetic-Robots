@@ -106,7 +106,7 @@ public class Robot implements IConstants {
 	}
 
 	private void calculateCost() {
-		this.cost = (double) (this.motorType + this.cameraType + this.batteryType) / 3;
+		this.cost = (double) (this.motorType + this.cameraType + this.batteryType + 3) / 3;
 	}
 	
 	public void mutate(int pBit, int pByteIndex) {

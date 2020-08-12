@@ -26,7 +26,7 @@ public class TablePanel extends JPanel implements IConstants{
 		super();
 		
 		this.controller = pController;
-		this.genCounter = 1;
+		this.genCounter = 0;
 		this.tableSelection();
 		
 		
@@ -68,7 +68,7 @@ public class TablePanel extends JPanel implements IConstants{
 	public ActionListener firstListener() {
 		ActionListener action = new ActionListener() {
 			public void actionPerformed(ActionEvent e){
-				genCounter = 1;
+				genCounter = 0;
 				refreshTable();
 			}
 		};
@@ -78,7 +78,7 @@ public class TablePanel extends JPanel implements IConstants{
 	public ActionListener backListener() {
 		ActionListener action = new ActionListener() {
 			public void actionPerformed(ActionEvent e){
-				genCounter = (genCounter > 1) ? --genCounter : 1;
+				genCounter = (genCounter > 1) ? --genCounter : 0;
 				refreshTable();
 			}
 		};
