@@ -61,11 +61,20 @@ public class GUIController implements IConstants{
 		
 		info += "\n\nGenes: \n";
 		
-		byte[] genes = rob.getGenes();
-		for (int i = 0; i < genes.length / 3; i+=3) {
-			info += String.format("%8s", Integer.toBinaryString(genes[i] & 0xFF)).replace(' ', '0');
-			info += String.format("%8s", Integer.toBinaryString(genes[i+1] & 0xFF)).replace(' ', '0');
-			info += String.format("%8s", Integer.toBinaryString(genes[i+2] & 0xFF)).replace(' ', '0') + "\n";
+//		byte[] genes = rob.getGenes();
+//		for (int i = 0; i < genes.length / 3; i+=3) {
+//			info += String.format("%8s", Integer.toBinaryString(genes[i] & 0xFF)).replace(' ', '0');
+//			info += String.format("%8s", Integer.toBinaryString(genes[i+1] & 0xFF)).replace(' ', '0');
+//			info += String.format("%8s", Integer.toBinaryString(genes[i+2] & 0xFF)).replace(' ', '0') + "\n";
+//		}
+		lineCount = 0;
+		for (byte chrom : rob.getGenes()) {
+			info += Byte.toUnsignedInt(chrom) + ", ";
+			lineCount++;
+			if (lineCount==12) {
+				lineCount = 0;
+				info += "\n";
+			}
 		}
 		
 		this.display.displayRobotInfo(info);
